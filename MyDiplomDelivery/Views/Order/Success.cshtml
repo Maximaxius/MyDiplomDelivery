@@ -1,0 +1,10 @@
+﻿@model OrderViewModel
+
+<div>
+    <div>Your code to check order => 
+        <span>@Model.Number</span>
+    </div>
+    <form asp-controller="Home" asp-action="Index">
+        <button>Go to home page</button>
+    </form>
+</div>

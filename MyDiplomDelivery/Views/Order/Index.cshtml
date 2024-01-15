@@ -1,0 +1,54 @@
+﻿@model AllOrderViewModel
+
+<div>
+    <h3>All Orders</h3>
+
+    @if (Model.Orders.Any())
+    {
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Id</th>
+                <th>Number</th>
+                <th>Comment</th>
+            </tr>
+
+            @foreach (var item in Model.Orders)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td class="status">@item.Status</td>
+                    <td>@item.From</td>
+                    <td>@item.To</td>
+                    <td>@item.Id</td>
+                    <td>@item.Number</td>
+                    <td>@item.Comment</td>
+                    <td>
+                        <button class="show"><a asp-controller="Order" asp-action="Delete" asp-route-num="@item.Number">Удалить</a></button>
+                    </td>
+                    <td>
+                        <button class="show"><a asp-controller="Order" asp-action="Edit" asp-route-num="@item.Number">Редактировать</a></button>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        <p>История пуста</p>
+    }
+
+</div>
+
+@section Scripts{
+    <script src="~/js/Color.js" asp-append-version="true"></script>
+}
+@section Links{
+    <link rel="stylesheet" href="~/css/Orders.css" asp-append-version="true" />
+}

@@ -1,0 +1,43 @@
+﻿@model MyDiplomDelivery.Models.Order
+<h2>Order № @Model.Id</h2>
+@using (Html.BeginForm("Edit", "Order", FormMethod.Post))
+{
+    <fieldset>
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.Number)
+        <p>
+            @Html.LabelFor(m => m.Name, "Name")
+            <br />
+            @Html.EditorFor(m => m.Name)
+        </p>
+        <p>
+            @Html.LabelFor(m => m.From, "From")
+            <br />
+            @Html.EditorFor(m => m.From)
+        </p>
+        <p>
+            @Html.LabelFor(m => m.To, "To")
+            <br />
+            @Html.EditorFor(m => m.To)
+        </p>
+        <p>
+            @Html.LabelFor(m => m.Description, "Description")
+            <br />
+            @Html.EditorFor(m => m.Description)
+        </p>
+
+        <p>
+            @Html.LabelFor(m => m.Comment, "Comment")
+            <br />
+            @Html.TextAreaFor(m => m.Comment)
+        </p>
+
+        <p>
+            @Html.LabelFor(m => m.Status, "Status")
+            <br />
+            @Html.DropDownList("Status",Html.GetEnumSelectList<StatusType>(),new {@class = "form-controller"})
+        </p>
+        
+        <p><input type="submit" value="Отправить" /></p>
+    </fieldset>
+}

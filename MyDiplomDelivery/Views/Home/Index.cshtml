@@ -1,0 +1,74 @@
+﻿@* @model OrderViewModel *@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+
+    <h1 class="display-4">Welcome</h1>
+
+    @* <form method="post" asp-controller="Home" asp-action="Index" enctype="multipart/form-data">
+        <div class="ad-form__amount ad-form__bottom">
+        <p class="ad-input__text--name">Enter your code</p>
+        <input name="Number" type="text" class="ad-input__name" placeholder="Number">
+        </div>
+
+        <button type="submit">Send data</button>
+        @if(@Model!=null ){
+            <div>NAME PROD    @Model.Name</div>
+            <div>NUM PRODDD   @Model.Status</div>
+            <div>NUM PRODDD   @Model.Comment</div>
+        }
+    </form> *@
+
+    <input type="text" id="inputData">
+    <button onclick="sendRequest()">Отправить запрос</button>
+    <div id="result"></div>
+
+
+
+    <button class="show"><a asp-controller="Deliveryman" asp-action="Create" asp-route-num="User.id">Создать//поменять </a></button>
+    @* @using (Html.BeginForm("Edit", "Deliveryman", FormMethod.Post))
+    {
+        <button class="show"><a asp-controller="Deliveryman" asp-action="Edit" asp-route-num="User.id">Изменить статус</a></button>
+    } *@
+</div>
+
+
+        @section Scripts {<script>
+        function sendRequest() {
+            const inputData = document.getElementById('inputData').value; // Получаем значение из input
+                                      const JsonData = JSON.stringify({ input: inputData })
+                                      console.log(JsonData);
+
+            fetch('https://localhost:7010/Home/GetOrderDetail', {
+                method: 'POST', // Метод запроса
+                headers: {
+                    'Content-Type': 'application/json' // Заголовки запроса
+                },
+                body: JSON.stringify({ input: inputData }) // Преобразуем данные в JSON и передаем в запрос
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Обработка полученного ответа в виде JSON
+            })
+            .then(data => {
+                console.log(data); // Вывод ответа в виде JSON объекта в консоль
+                const result = document.querySelector('#result');
+                const newDiv = document.createElement('div');
+
+                // Добавляем текст внутрь созданного div
+                newDiv.textContent = data.status+"  " + data.comment;   //вывести нужное
+
+                // Добавляем созданный div в документ
+                result.appendChild(newDiv);
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+                alert ("Некоректный запрос")
+            });
+        }
+
+    </script>}

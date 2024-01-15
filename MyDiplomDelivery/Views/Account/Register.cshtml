@@ -1,0 +1,29 @@
+﻿@model MyDiplomDelivery.ViewModels.RegisterViewModel
+<h2>Регистрация нового пользователя</h2>
+<div class="form-container">
+    <form method="post" asp-controller="Account" asp-action="Register" class="form">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div>
+            <label asp-for="Email"></label><br />
+            <input asp-for="Email" />
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div>
+            <label asp-for="Password"></label><br />
+            <input asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div>
+            <label asp-for="PasswordConfirm"></label><br />
+            <input asp-for="PasswordConfirm" />
+            <span asp-validation-for="PasswordConfirm"></span>
+        </div>
+        <div>
+            <input type="submit" value="Регистрация" />
+        </div>
+    </form>
+</div>
+
+@section Links{
+    <link rel="stylesheet" href="~/css/Login.css" asp-append-version="true" />
+}

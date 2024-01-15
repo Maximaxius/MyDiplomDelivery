@@ -1,0 +1,15 @@
+﻿td {
+    word-wrap: break-word;
+    max-width: 300px;
+    padding-right: 20px;
+}
+th {
+    padding-right: 20px;
+}
+tr {
+    border-bottom: solid 2px blue;
+}
+a {
+    text-decoration:none;
+    color:black
+}
