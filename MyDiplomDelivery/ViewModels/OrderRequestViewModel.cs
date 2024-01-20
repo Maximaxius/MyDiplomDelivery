@@ -1,6 +1,6 @@
 ﻿namespace MyDiplomDelivery.ViewModels
 {
-    public class OrderRequest
+    public class OrderRequestViewModel
     {
         public  string Input { get; set; }
     }

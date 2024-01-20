@@ -54,9 +54,8 @@ namespace MyDiplomDelivery.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DeliveryDetailId = table.Column<int>(type: "int", nullable: false),
                     DeliverymanId = table.Column<int>(type: "int", nullable: false),
-                    Email = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -84,6 +83,7 @@ namespace MyDiplomDelivery.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    userId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SecondName = table.Column<string>(type: "nvarchar(max)", nullable: true),

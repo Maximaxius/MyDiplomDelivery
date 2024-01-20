@@ -12,7 +12,7 @@ using MyDiplomDelivery.Contexts;
 namespace MyDiplomDelivery.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240104184319_a")]
+    [Migration("20240120142417_a")]
     partial class a
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -165,14 +165,11 @@ namespace MyDiplomDelivery.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("DeliveryDetailId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DeliverymanId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("Email")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -219,6 +216,9 @@ namespace MyDiplomDelivery.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecondName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("userId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");

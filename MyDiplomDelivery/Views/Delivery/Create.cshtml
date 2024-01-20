@@ -1,28 +1,27 @@
-﻿@model OrderViewModel
+﻿@model DeliveryDetailViewModel
 @* сделать стили или поменять старые  *@
 <h2>Создать заказ</h2>
 <form method="post" asp-controller="Delivery" asp-action="Create" enctype="multipart/form-data">
-
-    @*Есди выбранно то в других тоже можно выбрать*@
-    @* //https://www.youtube.com/watch?v=7ps92eq7PtM *@
-    <p>
-        @Html.LabelFor(m => m.Status, "Status")
+    @* 4 *@
+    <select class="form-select" asp-items="Model.deliveryManList" asp-for="selectDeliveryMan"></select>
+    @* 5 *@
+    @* <p>
+        @Html.Label("id")
         <br />
-        @Html.DropDownList("Status",ViewBag.ord,"Select", new {@class = "form-control chosen",multiple="multiple"})
-    </p>
-    @* https://www.youtube.com/watch?v=pigM1PojI0Q&t=148s *@
-    <p>
-        @Html.LabelFor(m => m.Status, "Status")
-        <br />
-        @Html.DropDownList("Status",ViewBag.ord,"Select", new {@class = "form-control"})
-    </p>
+        @Html.DropDownListFor(model => model.selectDeliveryMan, Model.deliveryManList)
+    </p> *@
 
+
+    @* MY
     <p>
         @Html.LabelFor(m => m.Status, "Status")
         <br />
         @Html.DropDownList("Status",ViewBag.ord,"Select", new {@class = "form-control"})
-    </p>
-
+    </p> *@
+    @* ЖПТ  сделать чтобы нормально выбирались а не через шифт*@
+    @Html.Label("Orders")
+    @Html.ListBoxFor(model => model.SelectedOptions, new MultiSelectList(Model.MultiSelectOptions, "Value", "Text"),
+    new { @class = "form-control", multiple = "multiple" })
 
     <button type="submit">Send data</button>
 </form>

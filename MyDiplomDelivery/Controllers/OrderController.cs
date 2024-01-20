@@ -137,6 +137,11 @@ namespace MyDiplomDelivery.Controllers
         {
             _applicationContext.Entry(order).State = EntityState.Modified;
             await _applicationContext.SaveChangesAsync();
+
+
+            //ApplicationContext usr = await GetCurrentUserAsync();
+
+
             return RedirectToAction("Index");
         }
 
@@ -156,6 +161,17 @@ namespace MyDiplomDelivery.Controllers
                 };
                 await _userManager.CreateAsync(user, password);
                 await _userManager.AddToRoleAsync(user, "deliver");
+
+                
+                Deliveryman deliveryman = new Deliveryman
+                {
+                    userId = user.Id,
+                    FirstName = $"A{i}",
+                    SecondName = "B",
+                    LastName = "C",
+                    IsActive = true,
+                };
+                await _applicationContext.Deliveryman.AddAsync(deliveryman);
             }
             return RedirectToAction("UserList", "Roles");
         }

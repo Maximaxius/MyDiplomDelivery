@@ -2,7 +2,7 @@
 
 namespace MyDiplomDelivery.ViewModels
 {
-    public class OrderResponse
+    public class OrderResponseViewModel
     {
         public string? Comment { get; set; }
         public string? Status { get; set; }

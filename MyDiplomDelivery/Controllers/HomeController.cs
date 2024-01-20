@@ -7,6 +7,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using MyDiplomDelivery.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace MyDiplomDelivery.Controllers
 {
@@ -22,8 +23,15 @@ namespace MyDiplomDelivery.Controllers
         }
 
 
+
+        public async Task<IActionResult> Index()
+        {
+            return View();
+        }
+
+
         [HttpPost]
-        public async Task<IActionResult> GetOrderDetail([FromBody] OrderRequest request)
+        public async Task<IActionResult> GetOrderDetail([FromBody] OrderRequestViewModel request)
         {
             if (!string.IsNullOrEmpty(request?.Input))
             {
@@ -32,7 +40,7 @@ namespace MyDiplomDelivery.Controllers
                 {
                     return NotFound();
                 }
-                var viewModel = new OrderResponse
+                var viewModel = new OrderResponseViewModel
                 {
                     Comment = order.Comment,
                     Status = order.Status.ToString(),
@@ -41,13 +49,6 @@ namespace MyDiplomDelivery.Controllers
             }
             return BadRequest();
         }
-
-        
-        public IActionResult Index()
-        {
-            return View();
-        }
-
 
 
         public IActionResult Privacy()
