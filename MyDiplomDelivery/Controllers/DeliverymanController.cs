@@ -7,6 +7,7 @@ using MyDiplomDelivery.Enums;
 using MyDiplomDelivery.Models;
 using MyDiplomDelivery.ViewModels;
 using System;
+using System.Security.Claims;
 
 namespace MyDiplomDelivery.Controllers
 {
@@ -26,19 +27,32 @@ namespace MyDiplomDelivery.Controllers
         //[Authorize(Roles = "deliver")]
         public async Task<IActionResult> IndexAsync()
         {
-            var Orders = await _applicationContext.Order.ToListAsync();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            //var Orders = await _applicationContext.Order.ToListAsync();
+            var deliveryMan = await _applicationContext.Deliveryman.FirstOrDefaultAsync(t => t.userId == user.Id);
 
+            var deliveryDetails = await _applicationContext.DeliveryDetail.Include(t =>t.Order).Include(t =>t.Delivery).Where(t=>t.Delivery.DeliverymanId ==deliveryMan.id).ToListAsync();
+            var a = 0;
+
+
+            //var deliverys = await _applicationContext.Delivery.ToListAsync(); ;
+
+
+            //var deliverys = await _applicationContext.Delivery
+            //    .Where(t => t.DeliverymanId == deliveryMan!.id)
+            //    .ToListAsync();
+            ////var deliveryDatails = await _applicationContext.DeliveryDetail.ToListAsync();
             var list = new List<OrderViewModel>();
-            foreach (var order in Orders)
+
+            foreach (var deliveryDetail in deliveryDetails)
             {
                 var log = new OrderViewModel
                 {
-                    Number = order.Number,
-                    Name = order.Name,
-                    Description = order.Description,
-                    From = order.From,
-                    To = order.To,
-                    Status = order.Status,
+                    Name = deliveryDetail.Order.Name,
+                    Description = deliveryDetail.Order.Description,
+                    From = deliveryDetail.Order.From,
+                    To = deliveryDetail.Order.To,
+                    Status = deliveryDetail.Order.Status,
                 };
                 list.Add(log);
             }

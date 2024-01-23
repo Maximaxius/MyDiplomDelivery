@@ -3,9 +3,6 @@ using System.Collections.Generic;
 
 namespace MyDiplomDelivery.ViewModels
 {
-    using Microsoft.AspNetCore.Identity;
-    using System.Collections.Generic;
-
     public class ChangeRoleViewModel
     {
         public string UserId { get; set; }

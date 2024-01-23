@@ -43,6 +43,7 @@
         .then(data => {
             console.log(data); // Вывод ответа в виде JSON объекта в консоль
             const result = document.querySelector('#result');
+            result.innerHTML = "";
             const statusDiv = document.createElement('div');
             
 

@@ -35,7 +35,8 @@ namespace MyDiplomDelivery.Controllers
         {
             if (!string.IsNullOrEmpty(request?.Input))
             {
-                var order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Number == request!.Input);
+                var orderNumber = request!.Input.Trim();
+                var order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Number == orderNumber);
                 if (order == null)
                 {
                     return NotFound();

@@ -4,10 +4,10 @@ namespace MyDiplomDelivery.ViewModels
 {
     public class DeliveryDetailViewModel
     {
-        public string? selectDeliveryMan { get; set; }
-        public List<SelectListItem>? deliveryManList { get; set; }
+        public int SelectDeliveryMan { get; set; }
+        public List<SelectListItem>? DeliveryManList { get; set; }
 
-        public List<SelectListItem>? MultiSelectOptions { get; set; }
-        public List<string>? SelectedOptions { get; set; }
+        public List<SelectListItem>? OrdersList { get; set; }
+        public List<int>? SelectedOrders { get; set; }
     }
 }

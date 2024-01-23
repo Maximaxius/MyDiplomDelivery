@@ -5,7 +5,7 @@ for (el of selector) {
             el.style.backgroundColor = "yellow";
             break;
         case "InProgress":
-            el.style.backgroundColor = "blue";
+            el.style.backgroundColor = "#3ed9f3";
             break;
         case "Compleated":
             el.style.backgroundColor = "green";

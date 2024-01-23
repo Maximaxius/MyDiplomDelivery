@@ -1,16 +1,12 @@
 ﻿using MyDiplomDelivery.Enums;
 
-namespace MyDiplomDelivery.Models
+namespace MyDiplomDelivery.ViewModels
 {
-    public class Delivery
+    public class DeliveryViewModel
     {
         public int Id { get; set; }
         public int DeliverymanId { get; set; }
-
-        public Deliveryman Deliveryman { get; set; }
         public DateTime CreationTime { get; set; }
         public StatusType Status { get; set; }
-
-        public List<DeliveryDetail> DeliveryDetails { get; set; }
     }
 }

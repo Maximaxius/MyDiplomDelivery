@@ -1,7 +1,35 @@
-﻿@model AllOrderViewModel
+﻿@model IEnumerable<AllDeliveryViewModel>
 
 <div>
     <button class="show"><a asp-controller="Delivery" asp-action="Create">Create</a></button>
+    @if (Model.Any())
+    {
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>CreationTime</th>
+                <th>Status</th>
+                <th>deliveryMan</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.CreationTime</td>
+                    <td class="status">@item.Status</td>  
+                    <td>@item.FirstName @item.SecondName @item.LastName</td>                        
+                    <td>
+                        <button class="show"><a asp-controller="Delivery" asp-action="Edit" asp-route-num="@item.Id">Редактировать</a></button>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <p>История пуста</p>
+    }
 </div>
 
 @section Scripts{

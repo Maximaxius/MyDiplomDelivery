@@ -1,0 +1,18 @@
+﻿@model MyDiplomDelivery.Models.Delivery
+<h2>Order № @Model.Id</h2>
+@using (Html.BeginForm("Edit", "Delivery", FormMethod.Post))
+{
+    <fieldset>
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.CreationTime)
+        @Html.HiddenFor(m => m.DeliverymanId)
+
+        <p>
+            @Html.LabelFor(m => m.Status, "Status")
+            <br />
+            @Html.DropDownList("Status",Html.GetEnumSelectList<StatusType>(),new {@class = "form-controller"})
+        </p>
+        
+        <p><input type="submit" value="Отправить" /></p>
+    </fieldset>
+}

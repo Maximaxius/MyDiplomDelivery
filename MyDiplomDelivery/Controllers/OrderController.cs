@@ -35,6 +35,7 @@ namespace MyDiplomDelivery.Controllers
             {
                 var log = new OrderViewModel
                 {
+                    Id = order.Id,
                     Number = order.Number,
                     Name = order.Name,
                     Description = order.Description,

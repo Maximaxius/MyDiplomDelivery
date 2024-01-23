@@ -3,7 +3,7 @@
 <h2>Создать заказ</h2>
 <form method="post" asp-controller="Delivery" asp-action="Create" enctype="multipart/form-data">
     @* 4 *@
-    <select class="form-select" asp-items="Model.deliveryManList" asp-for="selectDeliveryMan"></select>
+    <select class="form-select" asp-items="Model.DeliveryManList" asp-for="SelectDeliveryMan"></select>
     @* 5 *@
     @* <p>
         @Html.Label("id")
@@ -18,9 +18,9 @@
         <br />
         @Html.DropDownList("Status",ViewBag.ord,"Select", new {@class = "form-control"})
     </p> *@
-    @* ЖПТ  сделать чтобы нормально выбирались а не через шифт*@
+    @* ЖПТ  сделать чтобы нормально выбирались а не через контрл*@
     @Html.Label("Orders")
-    @Html.ListBoxFor(model => model.SelectedOptions, new MultiSelectList(Model.MultiSelectOptions, "Value", "Text"),
+    @Html.ListBoxFor(model => model.SelectedOrders, new MultiSelectList(Model.OrdersList, "Value", "Text"),
     new { @class = "form-control", multiple = "multiple" })
 
     <button type="submit">Send data</button>

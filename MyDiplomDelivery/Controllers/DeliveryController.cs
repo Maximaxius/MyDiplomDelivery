@@ -22,9 +22,29 @@ namespace MyDiplomDelivery.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> IndexAsync()
         {
-            return View();
+            var Deliverys = await _applicationContext.Delivery.Include(x=>x.Deliveryman).ToListAsync();
+            var DeliveryMans = await _applicationContext.Deliveryman.ToListAsync();
+
+            var list = new List<AllDeliveryViewModel>();
+            foreach (var delivery in Deliverys)
+            {
+                var log = new AllDeliveryViewModel
+                {
+                    Id = delivery.Id,
+                    CreationTime= delivery.CreationTime,
+                    Status =   delivery.Status,
+                    DeliverymanId= delivery.DeliverymanId,
+                    FirstName = delivery.Deliveryman.FirstName,
+                    SecondName = delivery.Deliveryman.SecondName,
+                    LastName = delivery.Deliveryman.LastName,
+                };
+                list.Add(log);
+            }
+            
+            return View(list);
         }
 
         [HttpGet]
@@ -36,49 +56,22 @@ namespace MyDiplomDelivery.Controllers
 
             //4 работает  GPT
             var model = new DeliveryDetailViewModel();
-            model.deliveryManList = new List<SelectListItem>();
+            model.DeliveryManList = new List<SelectListItem>();
             List<Deliveryman> asd = new List<Deliveryman>();
             foreach (var userRole in userRoles)
             {
                 foreach (var user in users)
                     if (userRole.UserId == user.userId && user.IsActive == true)
                     {
-                        model.deliveryManList.Add(new SelectListItem { Text = $"{user.FirstName} {user.SecondName}", Value = user.id.ToString() });
+                        model.DeliveryManList.Add(new SelectListItem { Text = $"{user.FirstName} {user.SecondName}", Value = user.id.ToString() });
                     }
             }
-            //5 работает  https://www.youtube.com/watch?v=A1yJVmtIDXA
-            //var options = new List<SelectListItem>();
-            //foreach (var userRole in userRoles)
-            //{
-            //    foreach (var user in users)
-            //        if (userRole.UserId == user.userId && user.IsActive == true)
-            //        {
-            //            options.Add(new SelectListItem { Text = $"{user.FirstName} {user.SecondName}", Value = user.id.ToString() });
-            //        }
-            //}
-            //var model = new DeliveryDetailViewModel
-            //{
-            //    deliveryManList = options
-            //};
-
-            //////////////////////////////////////////////////////////////////////////////////
-            /////GPT
-            model.MultiSelectOptions = new List<SelectListItem>();
+            model.OrdersList = new List<SelectListItem>();
             var orders = await _applicationContext.Order.Where(t => t.Status == StatusType.Todo).ToListAsync();
             foreach (var order in orders)
             {
-                model.MultiSelectOptions.Add(new SelectListItem { Text = $"{order.Name}", Value = order.Id.ToString() });
+                model.OrdersList.Add(new SelectListItem { Text = $"{order.Name}", Value = order.Id.ToString() });
             }
-
-            ///MY
-            //var orders = await _applicationContext.Order.Where(t => t.Status == StatusType.Todo).ToListAsync();
-            //List<string> ord = new List<string>();
-            //foreach (var order in orders)
-            //{
-            //    ord.Add(order.Name!);
-            //}
-            //ViewBag.ord = new SelectList(ord);
-
             return View(model);
         }
 
@@ -87,25 +80,35 @@ namespace MyDiplomDelivery.Controllers
         {
             if (ModelState.IsValid)
             {
+                //создание Delivery
                 var delivery = new Delivery
                 {
-                    DeliverymanId = Int32.Parse(model.selectDeliveryMan),
+                    DeliverymanId = model.SelectDeliveryMan,
                     Status = StatusType.Todo,
                     CreationTime = DateTime.Now,
                 };
                 await _applicationContext.Delivery.AddAsync(delivery);
                 await _applicationContext.SaveChangesAsync();
-
-                foreach (var item in model.SelectedOptions)
+                //создание DeliveryDetail
+                foreach (var item in model.SelectedOrders)
                 {
                     var deliveryDetail = new DeliveryDetail
                     {
                         DeliveryId = delivery.Id,
-                        OrderId = Int32.Parse(item)
+                        OrderId = item
                     };
                     await _applicationContext.DeliveryDetail.AddAsync(deliveryDetail);
                     await _applicationContext.SaveChangesAsync();
                 }
+                //Смена статуса заказов
+                foreach (var item in model.SelectedOrders)
+                {
+                    var order = _applicationContext.Order.FirstOrDefault(t => t.Id == item);  // почемуто на await жалуется и не работает с ним
+                    order.Status= StatusType.InProgress;
+                    _applicationContext.Entry(order).State = EntityState.Modified;
+                    await _applicationContext.SaveChangesAsync();
+                }
+
 
 
                 return RedirectToAction("Index", "Home");
