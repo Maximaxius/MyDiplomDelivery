@@ -1,6 +1,6 @@
 ﻿namespace MyDiplomDelivery.Models
 {
-    public class Deliveryman
+    public class Deliveryman //профиль
     {
         public int id { get; set; }
         public string? userId { get; set; }

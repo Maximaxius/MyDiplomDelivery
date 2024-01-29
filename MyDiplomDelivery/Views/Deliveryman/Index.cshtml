@@ -1,9 +1,9 @@
-﻿@model AllOrderViewModel
+﻿@model IEnumerable<OrderViewModel>
 
 <div>
     <h3>All Orders</h3>
 
-    @if (Model.Orders.Any())
+    @if (Model.Any())
     {
         <table>
             <tr>
@@ -14,7 +14,7 @@
                 <th>To</th>
             </tr>
 
-            @foreach (var item in Model.Orders)
+            @foreach (var item in Model)
             {
                 <tr>
                     <td>@item.Name</td>

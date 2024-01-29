@@ -6,6 +6,7 @@ using MyDiplomDelivery.Contexts;
 using MyDiplomDelivery.Enums;
 using MyDiplomDelivery.Models;
 using MyDiplomDelivery.ViewModels;
+using System.Xml.Linq;
 
 namespace MyDiplomDelivery.Controllers
 {
@@ -52,7 +53,7 @@ namespace MyDiplomDelivery.Controllers
         {
             var roleId = _applicationContext.Roles.FirstOrDefault(t => t.Name == "deliver")?.Id;
             var userRoles = await _applicationContext.UserRoles.Where(t => t.RoleId == roleId).ToListAsync();
-            var users = await _applicationContext.Deliveryman.ToListAsync();
+            var users = await _applicationContext.Deliveryman.Where(t=>t.IsActive==true).ToListAsync();
 
             //4 работает  GPT
             var model = new DeliveryDetailViewModel();
@@ -109,13 +110,54 @@ namespace MyDiplomDelivery.Controllers
                     await _applicationContext.SaveChangesAsync();
                 }
 
-
-
                 return RedirectToAction("Index", "Home");
 
             }
-
             return BadRequest();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var deliveryDetails = await _applicationContext.DeliveryDetail.Include(t => t.Order).
+                Include(t => t.Delivery).
+                Where(t => t.Delivery.Id == id).ToListAsync();
+            var delivery = await _applicationContext.Delivery.FirstOrDefaultAsync(t => t.Id == id);
+
+            var orders = new List<Order>();
+            foreach (var deliveryOrders in deliveryDetails)
+            {
+                var log = new Order
+                {
+                    Name = deliveryOrders.Order.Name,
+                    Description = deliveryOrders.Order.Description,
+                    Status = deliveryOrders.Order.Status,
+                };
+                orders.Add(log);
+            }
+
+            var list = new EditDelivery 
+            {
+                Orders = orders,
+                DeliveryId = delivery.Id,
+                CreationTime = delivery.CreationTime,
+                DeliverymanId = delivery.DeliverymanId,
+                Status = delivery.Status
+            };
+
+            if (list != null)
+            {
+                return View(list);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Delivery delivery)
+        {
+            _applicationContext.Entry(delivery).State = EntityState.Modified;
+            await _applicationContext.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
     }

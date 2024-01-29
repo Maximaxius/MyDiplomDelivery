@@ -1,18 +1,43 @@
-﻿@model MyDiplomDelivery.Models.Delivery
-<h2>Order № @Model.Id</h2>
+﻿@model EditDelivery
+<h2>Order № @Model.DeliveryId</h2>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Status</th>
+    </tr>
+
+    @foreach (var item in Model.Orders)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Description</td>
+            <td class="status">@item.Status</td>
+        </tr>
+    }
+
+</table>
+
 @using (Html.BeginForm("Edit", "Delivery", FormMethod.Post))
 {
     <fieldset>
-        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.DeliveryId)
         @Html.HiddenFor(m => m.CreationTime)
         @Html.HiddenFor(m => m.DeliverymanId)
-
         <p>
             @Html.LabelFor(m => m.Status, "Status")
             <br />
             @Html.DropDownList("Status",Html.GetEnumSelectList<StatusType>(),new {@class = "form-controller"})
         </p>
-        
+
         <p><input type="submit" value="Отправить" /></p>
     </fieldset>
+}
+
+@section Scripts{
+    <script src="~/js/Color.js" asp-append-version="true"></script>
+}
+@section Links{
+    <link rel="stylesheet" href="~/css/Orders.css" asp-append-version="true" />
 }

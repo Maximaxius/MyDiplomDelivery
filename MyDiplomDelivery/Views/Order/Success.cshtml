@@ -1,13 +1,13 @@
-﻿@model OrderViewModel
+﻿@model MyDiplomDelivery.ViewModels.O.SuccessViewModel
 
 <div>
     <div>Your code to check order => 
         <span id="sourceDiv">@Model.Number</span>
     </div>
+    <button onclick="copyToClipboard()">Копировать содержимое div</button>
     <form asp-controller="Home" asp-action="Index">
         <button>Go to home page</button>
     </form>
-    <button onclick="copyToClipboard()">Копировать содержимое div</button>
 </div>
 
 

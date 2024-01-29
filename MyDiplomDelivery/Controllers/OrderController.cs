@@ -6,6 +6,7 @@ using MyDiplomDelivery.Contexts;
 using MyDiplomDelivery.Enums;
 using MyDiplomDelivery.Models;
 using MyDiplomDelivery.ViewModels;
+using MyDiplomDelivery.ViewModels.O;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
@@ -47,15 +48,8 @@ namespace MyDiplomDelivery.Controllers
                 list.Add(log);
             }
 
-            var viewModel = new AllOrderViewModel
-            {
-                Orders = list
-            };
-
-            return View(viewModel);
+            return View(list);
         }
-
-
 
 
         [HttpGet]
@@ -65,7 +59,7 @@ namespace MyDiplomDelivery.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(OrderViewModel model)
+        public async Task<IActionResult> Create(CreateOrderViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -100,7 +94,7 @@ namespace MyDiplomDelivery.Controllers
                 return RedirectToAction("Create", "Order");
             }
 
-            var viewModel = new OrderViewModel
+            var viewModel = new SuccessViewModel
             {
                 Number = order.Number
             };
@@ -127,28 +121,64 @@ namespace MyDiplomDelivery.Controllers
             var Order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Number == num);
             if (Order != null)
             {
-                return View(Order);           
-            }
-            
+                EditOrderViewModel viewModel = new EditOrderViewModel 
+                {
+                    Number = Order.Number,
+                    Name = Order.Name,
+                    Description = Order.Description,
+                    From = Order.From,
+                    To = Order.To,
+                    Status = Order.Status,
+                    Comment = Order.Comment,
+                    Id = Order.Id
+                };
+                
+                return View(viewModel);         
+            }            
             return RedirectToAction("Index");
         }
+        
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Order order)
+        public async Task<IActionResult> Edit(EditOrderViewModel newOrder)
         {
+            Order order = new Order
+            {
+                Number = newOrder.Number,
+                Name = newOrder.Name,
+                Description = newOrder.Description,
+                From = newOrder.From,
+                To = newOrder.To,
+                Status = newOrder.Status,
+                Comment = newOrder.Comment,
+                Id = newOrder.Id
+            };
             _applicationContext.Entry(order).State = EntityState.Modified;
             await _applicationContext.SaveChangesAsync();
-
-
-            //ApplicationContext usr = await GetCurrentUserAsync();
-
-
             return RedirectToAction("Index");
         }
+        //Eсли через модель редактировать => @model MyDiplomDelivery.Models.Order 
+        //[HttpGet]
+        //public async Task<IActionResult> Edit(string num)
+        //{
+        //    var Order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Number == num);
+        //    if (Order != null)
+        //    {
+        //        return View(Order);
+        //    }
+        //    return RedirectToAction("Index");
+        //}
+        //[HttpPost]                                                                                
+        //public async Task<IActionResult> Edit(Order order)
+        //{
+        //    _applicationContext.Entry(order).State = EntityState.Modified;
+        //    await _applicationContext.SaveChangesAsync();
+        //    return RedirectToAction("Index");
+        //}
 
 
 
-        
+
         public async Task<IActionResult> Privacy() //для авто генерации пользователей 
         {
             for (int i = 0; i <= 5; i++)

@@ -1,5 +1,5 @@
 ﻿@model MyDiplomDelivery.Models.Order
-<h2>Order № @Model.Id</h2>
+<h2>Order № @Model.Number</h2>
 @using (Html.BeginForm("Order", "Deliveryman", FormMethod.Post))
 {
     <fieldset>
@@ -12,9 +12,15 @@
         @Html.HiddenFor(m => m.Name)
         @Html.HiddenFor(m => m.Description)
         <p>
-            @Html.LabelFor(m => m.Status, "Status")
+            @* @Html.LabelFor(m => m.Status, "Status")
             <br />
-            @Html.DropDownList("Status",Html.GetEnumSelectList<StatusType>(),new {@class = "form-controller"})
+            @Html.DropDownList("Status",Html.GetEnumSelectList<StatusType>(),new {@class = "form-controller"}) *@
+            <select id="myDropdown" asp-for="@Model.Status">
+                <option value="@StatusType.InProgress">@StatusType.InProgress.ToString()</option>
+                <option value="@StatusType.Completed">@StatusType.Completed.ToString()</option>
+                <option value="@StatusType.Cancelled">@StatusType.Cancelled.ToString()</option>
+            </select>
+
         </p>
         
         <p><input type="submit" value="Отправить" /></p>

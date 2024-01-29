@@ -11,6 +11,7 @@ using System.Security.Claims;
 
 namespace MyDiplomDelivery.Controllers
 {
+    [Authorize(Roles = "deliver")]//С большой 3 роли админ манагер доставщик 
     public class DeliverymanController : Controller
     {
         private readonly ApplicationContext _applicationContext;
@@ -23,25 +24,23 @@ namespace MyDiplomDelivery.Controllers
             _applicationContext = applicationContext;
             _userManager = userManager;
         }
-
-        //[Authorize(Roles = "deliver")]
         public async Task<IActionResult> IndexAsync()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            //var Orders = await _applicationContext.Order.ToListAsync();
             var deliveryMan = await _applicationContext.Deliveryman.FirstOrDefaultAsync(t => t.userId == user.Id);
 
-            var deliveryDetails = await _applicationContext.DeliveryDetail.Include(t =>t.Order).Include(t =>t.Delivery).Where(t=>t.Delivery.DeliverymanId ==deliveryMan.id).ToListAsync();
-            var a = 0;
+            //проверка естьли информация о доставщике тк роль выдана,а инфа не заполнена
+            if(deliveryMan == null)
+            {
+                return RedirectToAction("Create", "Deliveryman");
+            }
 
-
-            //var deliverys = await _applicationContext.Delivery.ToListAsync(); ;
-
-
-            //var deliverys = await _applicationContext.Delivery
-            //    .Where(t => t.DeliverymanId == deliveryMan!.id)
-            //    .ToListAsync();
-            ////var deliveryDatails = await _applicationContext.DeliveryDetail.ToListAsync();
+            var deliveryDetails = await _applicationContext.DeliveryDetail.Include(t =>t.Order).
+                Include(t =>t.Delivery).
+                Where(t=>t.Delivery.DeliverymanId ==deliveryMan.id && t.Order.Status == StatusType.InProgress 
+                && t.Order.Status == StatusType.Cancelled
+                && t.Order.Status == StatusType.Completed).ToListAsync();
+            ///вывести нужные по выборке 
             var list = new List<OrderViewModel>();
 
             foreach (var deliveryDetail in deliveryDetails)
@@ -53,16 +52,12 @@ namespace MyDiplomDelivery.Controllers
                     From = deliveryDetail.Order.From,
                     To = deliveryDetail.Order.To,
                     Status = deliveryDetail.Order.Status,
+                    Number = deliveryDetail.Order.Number,
                 };
                 list.Add(log);
             }
 
-            var viewModel = new AllOrderViewModel
-            {
-                Orders = list
-            };
-
-            return View(viewModel);
+            return View(list);
         }
 
         [HttpGet]
@@ -76,8 +71,10 @@ namespace MyDiplomDelivery.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(HttpContext.User);
                 var log = new Deliveryman
                 {
+                    userId = user.Id,
                     FirstName = model.FirstName,
                     SecondName= model.SecondName,
                     LastName = model.LastName,
@@ -107,7 +104,6 @@ namespace MyDiplomDelivery.Controllers
         [HttpPost]
         public async Task<IActionResult> Order(Order order)
         {
-
             _applicationContext.Entry(order).State = EntityState.Modified;
             await _applicationContext.SaveChangesAsync();
             return RedirectToAction("Index");

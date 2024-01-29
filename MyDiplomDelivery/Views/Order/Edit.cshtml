@@ -1,6 +1,37 @@
-﻿@model MyDiplomDelivery.Models.Order
+﻿@model MyDiplomDelivery.ViewModels.O.EditOrderViewModel 
 <h2>Order № @Model.Id</h2>
-@using (Html.BeginForm("Edit", "Order", FormMethod.Post))
+<form asp-action="Edit" asp-controller="Order" method="post">
+    <!-- Ваши элементы формы здесь -->
+    <input type="hidden" asp-for="@Model.Id" />
+    <input type="hidden" asp-for="@Model.Number" />
+
+    <label asp-for="Name">Name</label><br />
+    <input type="text" placeholder="Name" asp-for="@Model.Name" /><br />
+
+    <label asp-for="From">From</label><br />
+    <input type="text" placeholder="From" asp-for="@Model.From" /><br />
+
+    <label asp-for="To">To</label><br />
+    <input type="text" placeholder="To" asp-for="@Model.To" /><br />
+
+    <label asp-for="Description">Description</label><br />
+    <input type="text" placeholder="Description" asp-for="@Model.Description" /><br />
+
+    <label asp-for="Comment">Comment</label><br />
+    <input type="text" placeholder="Comment" asp-for="@Model.Comment" /><br />
+
+    <label asp-for="Status">Status</label><br />
+    <select id="myDropdown" asp-for="@Model.Status">
+        <br />
+        <option value="@StatusType.Todo">@StatusType.Todo.ToString()</option>
+        <option value="@StatusType.InProgress">@StatusType.InProgress.ToString()</option>
+        <option value="@StatusType.Completed">@StatusType.Completed.ToString()</option>
+        <option value="@StatusType.Cancelled">@StatusType.Cancelled.ToString()</option>
+        <option value="@StatusType.Closed">@StatusType.Closed.ToString()</option>
+    </select>
+    <p><input type="submit" value="Отправить" /></p>
+</form>
+@* @using (Html.BeginForm("Edit", "Order", FormMethod.Post))
 {
     <fieldset>
         @Html.HiddenFor(m => m.Id)
@@ -33,11 +64,16 @@
         </p>
 
         <p>
-            @Html.LabelFor(m => m.Status, "Status")
-            <br />
-            @Html.DropDownList("Status",Html.GetEnumSelectList<StatusType>(),new {@class = "form-controller"})
+            <select id="myDropdown" asp-for="@Model.Status">
+                <option value="@StatusType.Todo">@StatusType.Todo.ToString()</option>
+                <option value="@StatusType.InProgress">@StatusType.InProgress.ToString()</option>
+                <option value="@StatusType.Completed">@StatusType.Completed.ToString()</option>
+                <option value="@StatusType.Cancelled">@StatusType.Cancelled.ToString()</option>
+                <option value="@StatusType.Closed">@StatusType.Closed.ToString()</option>
+            </select>
         </p>
         
         <p><input type="submit" value="Отправить" /></p>
     </fieldset>
-}
+}  *@
+@* заменить на вью модель *@
