@@ -7,11 +7,14 @@ for (el of selector) {
         case "InProgress":
             el.style.backgroundColor = "#3ed9f3";
             break;
-        case "Compleated":
+        case "Completed":
             el.style.backgroundColor = "green";
             break;
         case "Cancelled":
             el.style.backgroundColor = "red";
+            break;
+        case "Closed":
+            el.style.backgroundColor = "#ff5cd6";
             break;
     }
 }

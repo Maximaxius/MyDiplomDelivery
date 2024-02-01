@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MyDiplomDelivery.ViewModels.Admin.AllUsersViewModel>
+
+<div>
+    <button class="show"><a asp-controller="Delivery" asp-action="Create">Create</a></button>
+    @if (Model.Any())
+    {
+        <table>
+            <tr>
+                <th>First</th>
+                <th>Second</th>
+                <th>Last</th>
+                <th>Activ</th>
+                <th>Roles</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FirstName</td>
+                    <td>@item.SecondName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.IsActive</td>
+                    @foreach (var role in item.Role)
+                    {
+                        <td>@role</td>
+                    }
+                    
+
+                    <td>
+                        <button class="show"><a asp-controller="Roles" asp-action="Edit" asp-route-userId="@item.Id">Редактировать</a></button>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <p>История пуста</p>
+    }
+</div>
+
+@section Scripts{
+    <script src="~/js/Color.js" asp-append-version="true"></script>
+}
+@section Links{
+    <link rel="stylesheet" href="~/css/Orders.css" asp-append-version="true" />
+}

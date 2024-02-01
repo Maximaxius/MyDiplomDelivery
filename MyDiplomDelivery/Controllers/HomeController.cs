@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using MyDiplomDelivery.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using MyDiplomDelivery.ViewModels.Home;
 
 namespace MyDiplomDelivery.Controllers
 {

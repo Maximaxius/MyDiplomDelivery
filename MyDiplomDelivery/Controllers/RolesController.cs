@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using MyDiplomDelivery.Models;
-using MyDiplomDelivery.ViewModels;
+using MyDiplomDelivery.ViewModels.Roles;
 
 namespace MyDiplomDelivery.Controllers
 {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyDiplomDelivery.Models;
-using MyDiplomDelivery.ViewModels;
+using MyDiplomDelivery.ViewModels.Account;
 
-namespace  MyDiplomDelivery.Controllers
+namespace MyDiplomDelivery.Controllers
 {
     public class AccountController : Controller
     {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using MyDiplomDelivery.Contexts;
 using MyDiplomDelivery.Enums;
 using MyDiplomDelivery.Models;
-using MyDiplomDelivery.ViewModels;
+using MyDiplomDelivery.ViewModels.Delivery;
 using System.Xml.Linq;
 
 namespace MyDiplomDelivery.Controllers
@@ -56,7 +56,7 @@ namespace MyDiplomDelivery.Controllers
             var users = await _applicationContext.Deliveryman.Where(t=>t.IsActive==true).ToListAsync();
 
             //4 работает  GPT
-            var model = new DeliveryDetailViewModel();
+            var model = new DeliveryCreateViewModel();
             model.DeliveryManList = new List<SelectListItem>();
             List<Deliveryman> asd = new List<Deliveryman>();
             foreach (var userRole in userRoles)
@@ -77,7 +77,7 @@ namespace MyDiplomDelivery.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(DeliveryDetailViewModel model)
+        public async Task<IActionResult> Create(DeliveryCreateViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -110,7 +110,7 @@ namespace MyDiplomDelivery.Controllers
                     await _applicationContext.SaveChangesAsync();
                 }
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Delivery");
 
             }
             return BadRequest();

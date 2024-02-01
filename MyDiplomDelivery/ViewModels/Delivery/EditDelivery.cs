@@ -1,7 +1,7 @@
 ﻿using MyDiplomDelivery.Enums;
 using MyDiplomDelivery.Models;
 
-namespace MyDiplomDelivery.ViewModels
+namespace MyDiplomDelivery.ViewModels.Delivery
 {
     public class EditDelivery
     {

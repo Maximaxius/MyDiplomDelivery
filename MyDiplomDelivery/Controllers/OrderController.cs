@@ -121,18 +121,10 @@ namespace MyDiplomDelivery.Controllers
             var Order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Number == num);
             if (Order != null)
             {
-                EditOrderViewModel viewModel = new EditOrderViewModel 
+                OrderEditOrderViewModel viewModel = new OrderEditOrderViewModel
                 {
-                    Number = Order.Number,
-                    Name = Order.Name,
-                    Description = Order.Description,
-                    From = Order.From,
-                    To = Order.To,
-                    Status = Order.Status,
-                    Comment = Order.Comment,
-                    Id = Order.Id
+                    Order = Order
                 };
-                
                 return View(viewModel);         
             }            
             return RedirectToAction("Index");
@@ -140,44 +132,12 @@ namespace MyDiplomDelivery.Controllers
         
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditOrderViewModel newOrder)
+        public async Task<IActionResult> Edit(OrderEditOrderViewModel newOrder)
         {
-            Order order = new Order
-            {
-                Number = newOrder.Number,
-                Name = newOrder.Name,
-                Description = newOrder.Description,
-                From = newOrder.From,
-                To = newOrder.To,
-                Status = newOrder.Status,
-                Comment = newOrder.Comment,
-                Id = newOrder.Id
-            };
-            _applicationContext.Entry(order).State = EntityState.Modified;
+            _applicationContext.Entry(newOrder.Order).State = EntityState.Modified;
             await _applicationContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-        //Eсли через модель редактировать => @model MyDiplomDelivery.Models.Order 
-        //[HttpGet]
-        //public async Task<IActionResult> Edit(string num)
-        //{
-        //    var Order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Number == num);
-        //    if (Order != null)
-        //    {
-        //        return View(Order);
-        //    }
-        //    return RedirectToAction("Index");
-        //}
-        //[HttpPost]                                                                                
-        //public async Task<IActionResult> Edit(Order order)
-        //{
-        //    _applicationContext.Entry(order).State = EntityState.Modified;
-        //    await _applicationContext.SaveChangesAsync();
-        //    return RedirectToAction("Index");
-        //}
-
-
-
 
         public async Task<IActionResult> Privacy() //для авто генерации пользователей 
         {
@@ -188,7 +148,11 @@ namespace MyDiplomDelivery.Controllers
                 User user = new User
                 {
                     Email = userEmail,
-                    UserName = userEmail
+                    UserName = userEmail,
+                    FirstName = "FirstName",
+                    SecondName = "SecondName",
+                    LastName = "LastName",
+                    IsActive = true,
                 };
                 await _userManager.CreateAsync(user, password);
                 await _userManager.AddToRoleAsync(user, "deliver");

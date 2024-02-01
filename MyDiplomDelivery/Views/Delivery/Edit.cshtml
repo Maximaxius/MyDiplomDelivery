@@ -1,4 +1,4 @@
-﻿@model EditDelivery
+﻿@model MyDiplomDelivery.ViewModels.Delivery.EditDelivery
 <h2>Order № @Model.DeliveryId</h2>
 
 <table>
@@ -18,22 +18,20 @@
     }
 
 </table>
-
-@using (Html.BeginForm("Edit", "Delivery", FormMethod.Post))
-{
-    <fieldset>
-        @Html.HiddenFor(m => m.DeliveryId)
-        @Html.HiddenFor(m => m.CreationTime)
-        @Html.HiddenFor(m => m.DeliverymanId)
-        <p>
-            @Html.LabelFor(m => m.Status, "Status")
-            <br />
-            @Html.DropDownList("Status",Html.GetEnumSelectList<StatusType>(),new {@class = "form-controller"})
-        </p>
-
-        <p><input type="submit" value="Отправить" /></p>
-    </fieldset>
-}
+<form asp-action="Edit" asp-controller="Delivery" method="post">
+    <input type="hidden" asp-for="@Model.DeliveryId" />
+    <input type="hidden" asp-for="@Model.CreationTime" />
+    <input type="hidden" asp-for="@Model.DeliverymanId" />
+    <select id="myDropdown" asp-for="@Model.Status">
+        <br />
+        <option value="@StatusType.Todo">@StatusType.Todo.ToString()</option>
+        <option value="@StatusType.InProgress">@StatusType.InProgress.ToString()</option>
+        <option value="@StatusType.Completed">@StatusType.Completed.ToString()</option>
+        <option value="@StatusType.Cancelled">@StatusType.Cancelled.ToString()</option>
+        <option value="@StatusType.Closed">@StatusType.Closed.ToString()</option>
+    </select>
+    <p><input type="submit" value="Отправить" /></p>
+</form>
 
 @section Scripts{
     <script src="~/js/Color.js" asp-append-version="true"></script>

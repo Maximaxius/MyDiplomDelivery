@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-
-namespace MyDiplomDelivery.ViewModels
+namespace MyDiplomDelivery.ViewModels.Delivery
 {
-    public class DeliveryDetailViewModel
+    public class DeliveryCreateViewModel
     {
         public int SelectDeliveryMan { get; set; }
         public List<SelectListItem>? DeliveryManList { get; set; }

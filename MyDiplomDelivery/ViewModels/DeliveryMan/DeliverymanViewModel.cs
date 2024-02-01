@@ -1,4 +1,4 @@
-﻿namespace MyDiplomDelivery.ViewModels
+﻿namespace MyDiplomDelivery.ViewModels.DeliveryMan
 {
     public class DeliverymanViewModel
     {

@@ -6,6 +6,7 @@ using MyDiplomDelivery.Contexts;
 using MyDiplomDelivery.Enums;
 using MyDiplomDelivery.Models;
 using MyDiplomDelivery.ViewModels;
+using MyDiplomDelivery.ViewModels.DeliveryMan;
 using System;
 using System.Security.Claims;
 
@@ -37,15 +38,15 @@ namespace MyDiplomDelivery.Controllers
 
             var deliveryDetails = await _applicationContext.DeliveryDetail.Include(t =>t.Order).
                 Include(t =>t.Delivery).
-                Where(t=>t.Delivery.DeliverymanId ==deliveryMan.id && t.Order.Status == StatusType.InProgress 
-                && t.Order.Status == StatusType.Cancelled
-                && t.Order.Status == StatusType.Completed).ToListAsync();
+                Where(t=>t.Delivery.DeliverymanId ==deliveryMan.id && (t.Order.Status == StatusType.InProgress 
+                || t.Order.Status == StatusType.Cancelled
+                || t.Order.Status == StatusType.Completed)).ToListAsync();
             ///вывести нужные по выборке 
-            var list = new List<OrderViewModel>();
+            var list = new List<AllOrderViewModel>();
 
             foreach (var deliveryDetail in deliveryDetails)
             {
-                var log = new OrderViewModel
+                var log = new AllOrderViewModel
                 {
                     Name = deliveryDetail.Order.Name,
                     Description = deliveryDetail.Order.Description,
@@ -95,16 +96,20 @@ namespace MyDiplomDelivery.Controllers
             var Order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Number == num);
             if (Order != null)
             {
-                return View(Order);
+                DeliveryManEditOrderViewModel viewModel = new DeliveryManEditOrderViewModel
+                {
+                    Order = Order
+                };
+                return View(viewModel);
             }
-
             return RedirectToAction("Index");
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> Order(Order order)
+        public async Task<IActionResult> Order(DeliveryManEditOrderViewModel order)
         {
-            _applicationContext.Entry(order).State = EntityState.Modified;
+            _applicationContext.Entry(order.Order).State = EntityState.Modified;
             await _applicationContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
