@@ -10,5 +10,8 @@ namespace MyDiplomDelivery.Models
         public string? SecondName { get; set; }
         public bool IsActive { get; set; }
         public List<Delivery> Deliveries { get; set; }
+
+        //public ICollection<IdentityUserRole<string>> Roles { get; } = new List<IdentityUserRole<string>>();
+
     }
 }

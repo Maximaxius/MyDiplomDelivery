@@ -155,7 +155,7 @@ namespace MyDiplomDelivery.Controllers
                     IsActive = true,
                 };
                 await _userManager.CreateAsync(user, password);
-                await _userManager.AddToRoleAsync(user, "deliver");
+                await _userManager.AddToRoleAsync(user, "Deliver");
 
                 
                 Deliveryman deliveryman = new Deliveryman
@@ -167,6 +167,15 @@ namespace MyDiplomDelivery.Controllers
                     IsActive = true,
                 };
                 await _applicationContext.Deliveryman.AddAsync(deliveryman);
+
+                Order order = new Order
+                {
+                    Number = Guid.NewGuid().ToString("N"),
+                    From = "asd",
+                    Name = $"{i}",
+                    Status=StatusType.Todo
+                };
+                await _applicationContext.Order.AddAsync(order);
             }
             return RedirectToAction("UserList", "Roles");
         }

@@ -25,9 +25,15 @@ namespace MyDiplomDelivery.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.Email };
+                User user = new User { 
+                    Email = model.Email, 
+                    UserName = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,                    
+                };
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
+                await _userManager.AddToRoleAsync(user, "User");
                 if (result.Succeeded)
                 {
                     // установка куки

@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<MyDiplomDelivery.ViewModels.Admin.AllUsersViewModel>
 
 <div>
-    <button class="show"><a asp-controller="Delivery" asp-action="Create">Create</a></button>
     @if (Model.Any())
     {
         <table>
@@ -27,7 +26,10 @@
                     
 
                     <td>
-                        <button class="show"><a asp-controller="Roles" asp-action="Edit" asp-route-userId="@item.Id">Редактировать</a></button>
+                        <button class="show"><a asp-controller="Roles" asp-action="Edit" asp-route-userId="@item.Id">Изменить рроль</a></button>
+                    </td>
+                    <td>
+                        <button class="show"><a asp-controller="Admin" asp-action="EditUser" asp-route-userId="@item.Id">Редактировать пользователя</a></button>
                     </td>
                 </tr>
             }

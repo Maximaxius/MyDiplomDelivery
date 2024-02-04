@@ -1,25 +1,21 @@
 ﻿@model MyDiplomDelivery.ViewModels.DeliveryMan.DeliveryManEditOrderViewModel
 <h2>Order № @Model.Order.Number</h2>
-@using (Html.BeginForm("Order", "Deliveryman", FormMethod.Post))
-{
-    <fieldset>
-        @* Может есть другой способ а не все HiddenFor*@
-        @Html.HiddenFor(m => m.Order.Id)
-        @Html.HiddenFor(m => m.Order.Number)
-        @Html.HiddenFor(m => m.Order.From)
-        @Html.HiddenFor(m => m.Order.To)
-        @Html.HiddenFor(m => m.Order.Comment)
-        @Html.HiddenFor(m => m.Order.Name)
-        @Html.HiddenFor(m => m.Order.Description)
-        <p>
-            <select id="myDropdown" asp-for="@Model.Order.Status">
-                <option value="@StatusType.InProgress">@StatusType.InProgress.ToString()</option>
-                <option value="@StatusType.Completed">@StatusType.Completed.ToString()</option>
-                <option value="@StatusType.Cancelled">@StatusType.Cancelled.ToString()</option>
-            </select>
 
-        </p>
-        
-        <p><input type="submit" value="Отправить" /></p>
-    </fieldset>
-}
+
+<form asp-action="Order" asp-controller="Deliveryman" method="post">
+    <input type="hidden" asp-for="@Model.Order.Id" />
+    <input type="hidden" asp-for="@Model.Order.Number" />
+    <input type="hidden" asp-for="@Model.Order.From" />
+    <input type="hidden" asp-for="@Model.Order.To" />
+    <input type="hidden" asp-for="@Model.Order.Comment" />
+    <input type="hidden" asp-for="@Model.Order.Name" />
+    <input type="hidden" asp-for="@Model.Order.Description" />
+
+    <label asp-for="@Model.Order.Status">Status</label><br />
+    <select id="myDropdown" asp-for="@Model.Order.Status">
+        <option value="@StatusType.InProgress">@StatusType.InProgress.ToString()</option>
+        <option value="@StatusType.Completed">@StatusType.Completed.ToString()</option>
+        <option value="@StatusType.Cancelled">@StatusType.Cancelled.ToString()</option>
+    </select>
+    <p><input type="submit" value="Отправить" /></p>
+</form>

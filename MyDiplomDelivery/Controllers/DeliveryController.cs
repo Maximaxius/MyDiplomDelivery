@@ -6,6 +6,7 @@ using MyDiplomDelivery.Contexts;
 using MyDiplomDelivery.Enums;
 using MyDiplomDelivery.Models;
 using MyDiplomDelivery.ViewModels.Delivery;
+using System.Data;
 using System.Xml.Linq;
 
 namespace MyDiplomDelivery.Controllers
@@ -14,20 +15,22 @@ namespace MyDiplomDelivery.Controllers
     {
         private readonly ApplicationContext _applicationContext;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public DeliveryController(
             ApplicationContext applicationContext,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _applicationContext = applicationContext;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
-            var Deliverys = await _applicationContext.Delivery.Include(x=>x.Deliveryman).ToListAsync();
-            var DeliveryMans = await _applicationContext.Deliveryman.ToListAsync();
+            var Deliverys = await _applicationContext.Delivery.Include(x => x.DeliveryMan).ToListAsync();
 
             var list = new List<AllDeliveryViewModel>();
             foreach (var delivery in Deliverys)
@@ -36,11 +39,11 @@ namespace MyDiplomDelivery.Controllers
                 {
                     Id = delivery.Id,
                     CreationTime= delivery.CreationTime,
-                    Status =   delivery.Status,
-                    DeliverymanId= delivery.DeliverymanId,
-                    FirstName = delivery.Deliveryman.FirstName,
-                    SecondName = delivery.Deliveryman.SecondName,
-                    LastName = delivery.Deliveryman.LastName,
+                    Status = delivery.Status,
+                    DeliverymanId = delivery.DeliveryMan.Id,
+                    FirstName = delivery.DeliveryMan.FirstName,
+                    SecondName = delivery.DeliveryMan.SecondName,
+                    LastName = delivery.DeliveryMan.LastName,
                 };
                 list.Add(log);
             }
@@ -53,20 +56,20 @@ namespace MyDiplomDelivery.Controllers
         {
             var roleId = _applicationContext.Roles.FirstOrDefault(t => t.Name == "deliver")?.Id;
             var userRoles = await _applicationContext.UserRoles.Where(t => t.RoleId == roleId).ToListAsync();
-            var users = await _applicationContext.Deliveryman.Where(t=>t.IsActive==true).ToListAsync();
-
-            //4 работает  GPT
+            var User = await _applicationContext.Users.Where(t=>t.IsActive == true).ToListAsync();
+            //Вроде работает  ДЛя ЮЗЕРОВ
             var model = new DeliveryCreateViewModel();
             model.DeliveryManList = new List<SelectListItem>();
-            List<Deliveryman> asd = new List<Deliveryman>();
+            List<User> asd = new List<User>();
             foreach (var userRole in userRoles)
             {
-                foreach (var user in users)
-                    if (userRole.UserId == user.userId && user.IsActive == true)
+                foreach (var user in User)
+                    if (userRole.UserId == user.Id && user.IsActive == true)
                     {
-                        model.DeliveryManList.Add(new SelectListItem { Text = $"{user.FirstName} {user.SecondName}", Value = user.id.ToString() });
+                        model.DeliveryManList.Add(new SelectListItem { Text = $"{user.FirstName} {user.SecondName}", Value = user.Id.ToString() });
                     }
             }
+
             model.OrdersList = new List<SelectListItem>();
             var orders = await _applicationContext.Order.Where(t => t.Status == StatusType.Todo).ToListAsync();
             foreach (var order in orders)
@@ -84,7 +87,7 @@ namespace MyDiplomDelivery.Controllers
                 //создание Delivery
                 var delivery = new Delivery
                 {
-                    DeliverymanId = model.SelectDeliveryMan,
+                    Deliverymanid = model.SelectDeliveryMan,
                     Status = StatusType.Todo,
                     CreationTime = DateTime.Now,
                 };
@@ -136,12 +139,12 @@ namespace MyDiplomDelivery.Controllers
                 orders.Add(log);
             }
 
-            var list = new EditDelivery 
+            var list = new EditDeliveryViewModel
             {
                 Orders = orders,
                 DeliveryId = delivery.Id,
                 CreationTime = delivery.CreationTime,
-                DeliverymanId = delivery.DeliverymanId,
+                UserId = delivery.Deliverymanid,
                 Status = delivery.Status
             };
 
@@ -153,8 +156,10 @@ namespace MyDiplomDelivery.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Delivery delivery)
+        public async Task<IActionResult> Edit(EditDeliveryViewModel editDelivery)
         {
+            Delivery delivery = await _applicationContext.Delivery.FirstOrDefaultAsync(t => t.Id == editDelivery.DeliveryId);
+            delivery.Status = editDelivery.Status;
             _applicationContext.Entry(delivery).State = EntityState.Modified;
             await _applicationContext.SaveChangesAsync();
             return RedirectToAction("Index");

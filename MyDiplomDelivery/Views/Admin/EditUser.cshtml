@@ -1,0 +1,27 @@
+﻿@model MyDiplomDelivery.ViewModels.Admin.EditUserViewModel
+@* сделать стили или поменять старые  *@
+<h2>Изменить User</h2>
+<form method="post" asp-controller="Admin" asp-action="EditUser" enctype="multipart/form-data">
+    <input type="hidden" asp-for="@Model.Id" />
+
+    <label asp-for="@Model.FirstName">FirstName</label><br />
+    <input type="text" placeholder="FirstName" asp-for="@Model.FirstName" /><br />
+
+    <label asp-for="@Model.SecondName">SecondName</label><br />
+    <input type="text" placeholder="SecondName" asp-for="@Model.SecondName" /><br />
+
+    <label asp-for="@Model.LastName">LastName</label><br />
+    <input type="text" placeholder="LastName" asp-for="@Model.LastName" /><br />
+
+    <select id="myDropdown" asp-for="@Model.IsActive">
+        <option value="True">Active</option>
+        <option value="False">Not Active</option>
+    </select><br />
+
+    <button type="submit">Send data</button>
+</form>
+
+
+@section Links{
+    <link rel="stylesheet" href="~/css/Inp.css" asp-append-version="true" />
+}

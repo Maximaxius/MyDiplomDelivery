@@ -6,6 +6,7 @@ using MyDiplomDelivery.Contexts;
 using MyDiplomDelivery.Models;
 using MyDiplomDelivery.ViewModels.Admin;
 using MyDiplomDelivery.ViewModels.Delivery;
+using MyDiplomDelivery.ViewModels.O;
 
 namespace MyDiplomDelivery.Controllers
 {
@@ -46,6 +47,45 @@ namespace MyDiplomDelivery.Controllers
             return View(list);
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string userId)
+        {
+            var user = await _applicationContext.Users.FirstOrDefaultAsync(order => order.Id == userId);
+            if (user != null)
+            {
+                EditUserViewModel viewModel = new EditUserViewModel
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    IsActive = user.IsActive,
+                    SecondName= user.SecondName,
+                };
+                return View(viewModel);
+            }
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel edit)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = await _userManager.FindByIdAsync(edit.Id);
+                if (user != null)
+                {
+                    user.FirstName = edit.FirstName;
+                    user.SecondName = edit.SecondName;
+                    user.LastName = edit.LastName;
+                    user.IsActive = edit.IsActive;
+                    await _userManager.UpdateAsync(user);
+                }
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
 
     }
 }

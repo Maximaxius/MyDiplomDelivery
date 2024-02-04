@@ -12,7 +12,7 @@ using System.Security.Claims;
 
 namespace MyDiplomDelivery.Controllers
 {
-    [Authorize(Roles = "deliver")]//С большой 3 роли админ манагер доставщик 
+    [Authorize(Roles = "Deliver")]
     public class DeliverymanController : Controller
     {
         private readonly ApplicationContext _applicationContext;
@@ -28,20 +28,13 @@ namespace MyDiplomDelivery.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var deliveryMan = await _applicationContext.Deliveryman.FirstOrDefaultAsync(t => t.userId == user.Id);
 
-            //проверка естьли информация о доставщике тк роль выдана,а инфа не заполнена
-            if(deliveryMan == null)
-            {
-                return RedirectToAction("Create", "Deliveryman");
-            }
-
-            var deliveryDetails = await _applicationContext.DeliveryDetail.Include(t =>t.Order).
-                Include(t =>t.Delivery).
-                Where(t=>t.Delivery.DeliverymanId ==deliveryMan.id && (t.Order.Status == StatusType.InProgress 
+            var deliveryDetails = await _applicationContext.DeliveryDetail.Include(t => t.Order).
+                Include(t => t.Delivery).
+                Where(t => t.Delivery.Deliverymanid == user.Id && (t.Order.Status == StatusType.InProgress
                 || t.Order.Status == StatusType.Cancelled
                 || t.Order.Status == StatusType.Completed)).ToListAsync();
-            ///вывести нужные по выборке 
+            
             var list = new List<AllOrderViewModel>();
 
             foreach (var deliveryDetail in deliveryDetails)
@@ -77,7 +70,7 @@ namespace MyDiplomDelivery.Controllers
                 {
                     userId = user.Id,
                     FirstName = model.FirstName,
-                    SecondName= model.SecondName,
+                    SecondName = model.SecondName,
                     LastName = model.LastName,
                     IsActive = model.IsActive
                 };
@@ -107,9 +100,9 @@ namespace MyDiplomDelivery.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Order(DeliveryManEditOrderViewModel order)
+        public async Task<IActionResult> Order(DeliveryManEditOrderViewModel editOrder)
         {
-            _applicationContext.Entry(order.Order).State = EntityState.Modified;
+            _applicationContext.Entry(editOrder.Order).State = EntityState.Modified;
             await _applicationContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
