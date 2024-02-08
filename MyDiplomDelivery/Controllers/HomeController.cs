@@ -23,8 +23,6 @@ namespace MyDiplomDelivery.Controllers
             _applicationContext = applicationContext;
         }
 
-
-
         public async Task<IActionResult> Index()
         {
             return View();

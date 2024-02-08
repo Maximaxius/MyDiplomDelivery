@@ -19,12 +19,8 @@
                     <td>@item.SecondName</td>
                     <td>@item.LastName</td>
                     <td>@item.IsActive</td>
-                    @foreach (var role in item.Role)
-                    {
-                        <td>@role</td>
-                    }
+                    <td >@item.Role.Count <span title="@string.Join(" ",item.Role)">{i}</span></td> @* i заменить на иконку *@
                     
-
                     <td>
                         <button class="show"><a asp-controller="Roles" asp-action="Edit" asp-route-userId="@item.Id">Изменить рроль</a></button>
                     </td>

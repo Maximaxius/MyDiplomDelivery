@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using MyDiplomDelivery.Models;
 using MyDiplomDelivery.ViewModels.Roles;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyDiplomDelivery.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {
         RoleManager<IdentityRole> _roleManager;
@@ -96,7 +98,7 @@ namespace MyDiplomDelivery.Controllers
 
                 await _userManager.RemoveFromRolesAsync(user, removedRoles);
 
-                return RedirectToAction("UserList");
+                return RedirectToAction("Index", "Admin");
             }
 
             return NotFound();

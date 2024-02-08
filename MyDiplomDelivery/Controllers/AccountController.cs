@@ -93,5 +93,10 @@ namespace MyDiplomDelivery.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        public async Task<IActionResult> AccessDenied()
+        {
+            return View();
+        }
     }
 }

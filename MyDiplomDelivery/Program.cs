@@ -4,6 +4,7 @@ using MyDiplomDelivery.Contexts;
 using MyDiplomDelivery.Models;
 using System.Data;
 using System;
+using MyDiplomDelivery.MiddleWare;
 
 namespace MyDiplomDelivery
 {
@@ -19,6 +20,7 @@ namespace MyDiplomDelivery
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
 
             var app = builder.Build();
 
@@ -37,6 +39,9 @@ namespace MyDiplomDelivery
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<IsActiveMiddleware>();
+            // Другие middleware
 
             app.MapControllerRoute(
                 name: "default",

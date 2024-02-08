@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using System.Xml.Linq;
 
 namespace MyDiplomDelivery.Controllers
 {
+    [Authorize(Roles = "Admin,Manager")]
     public class DeliveryController : Controller
     {
         private readonly ApplicationContext _applicationContext;

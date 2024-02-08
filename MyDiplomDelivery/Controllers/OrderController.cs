@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using System.Xml.Linq;
 
 namespace MyDiplomDelivery.Controllers
 {
+    [Authorize(Roles = "Admin,Manager")]
     public class OrderController : Controller
     {
         private readonly ApplicationContext _applicationContext;
@@ -51,13 +53,14 @@ namespace MyDiplomDelivery.Controllers
             return View(list);
         }
 
-
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Create(CreateOrderViewModel model)
         {
@@ -84,6 +87,7 @@ namespace MyDiplomDelivery.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> SuccessAsync(int id)
         {
