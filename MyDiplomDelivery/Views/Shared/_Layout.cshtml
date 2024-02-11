@@ -41,7 +41,7 @@
                         }
 
 
-                        @if (User.IsInRole("Deliver"))
+                        @if (User.IsInRole("DeliveryMan"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Deliveryman" asp-action="Index">Deliveryman</a>
@@ -51,11 +51,7 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Privacy">autoGen</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">All users/Roles</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AutoGenUserOrder">autoGen</a>
                             </li>
 
                             <li class="nav-item">

@@ -16,17 +16,11 @@ namespace MyDiplomDelivery.Controllers
     public class DeliveryController : Controller
     {
         private readonly ApplicationContext _applicationContext;
-        private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
         public DeliveryController(
-            ApplicationContext applicationContext,
-            UserManager<User> userManager,
-            RoleManager<IdentityRole> roleManager)
+            ApplicationContext applicationContext)
         {
             _applicationContext = applicationContext;
-            _userManager = userManager;
-            _roleManager = roleManager;
         }
 
         [HttpGet]
@@ -42,34 +36,35 @@ namespace MyDiplomDelivery.Controllers
                     Id = delivery.Id,
                     CreationTime= delivery.CreationTime,
                     Status = delivery.Status,
-                    DeliverymanId = delivery.DeliveryMan.Id,
+                    DeliveryManId = delivery.DeliveryMan.Id,
                     FirstName = delivery.DeliveryMan.FirstName,
                     SecondName = delivery.DeliveryMan.SecondName,
                     LastName = delivery.DeliveryMan.LastName,
                 };
                 list.Add(log);
-            }
-            
+            }            
             return View(list);
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var roleId = _applicationContext.Roles.FirstOrDefault(t => t.Name == "deliver")?.Id;
-            var userRoles = await _applicationContext.UserRoles.Where(t => t.RoleId == roleId).ToListAsync();
-            var User = await _applicationContext.Users.Where(t=>t.IsActive == true).ToListAsync();
-            //Вроде работает  ДЛя ЮЗЕРОВ
+            var roleId = _applicationContext.Roles.FirstOrDefault(t => t.Name == "DeliveryMan")?.Id;
+            var deliveryMans = await _applicationContext.UserRoles.Where(t => t.RoleId == roleId).ToListAsync();
+            var users = await _applicationContext.Users.Where(t=>t.IsActive == true).ToListAsync();
+            
             var model = new DeliveryCreateViewModel();
             model.DeliveryManList = new List<SelectListItem>();
-            List<User> asd = new List<User>();
-            foreach (var userRole in userRoles)
+            foreach (var deliveryMan in deliveryMans)
             {
-                foreach (var user in User)
-                    if (userRole.UserId == user.Id && user.IsActive == true)
+                foreach (var user in users)
+                {
+                    if (deliveryMan.UserId == user.Id && user.IsActive == true)
                     {
-                        model.DeliveryManList.Add(new SelectListItem { Text = $"{user.FirstName} {user.SecondName}", Value = user.Id.ToString() });
+                        model.DeliveryManList.Add(new SelectListItem { Text = $"{user.FirstName} {user.SecondName} {user.LastName}", Value = user.Id.ToString() });
                     }
+                }
             }
 
             model.OrdersList = new List<SelectListItem>();
@@ -89,7 +84,7 @@ namespace MyDiplomDelivery.Controllers
                 //создание Delivery
                 var delivery = new Delivery
                 {
-                    Deliverymanid = model.SelectDeliveryMan,
+                    DeliveryManId = model.SelectDeliveryMan,
                     Status = StatusType.Todo,
                     CreationTime = DateTime.Now,
                 };
@@ -110,16 +105,15 @@ namespace MyDiplomDelivery.Controllers
                 foreach (var item in model.SelectedOrders)
                 {
                     var order = _applicationContext.Order.FirstOrDefault(t => t.Id == item);  // почемуто на await жалуется и не работает с ним
-                    order.Status= StatusType.InProgress;
+                    order!.Status= StatusType.InProgress; // order! == что не null
                     _applicationContext.Entry(order).State = EntityState.Modified;
                     await _applicationContext.SaveChangesAsync();
                 }
-
                 return RedirectToAction("Index", "Delivery");
-
             }
             return BadRequest();
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -144,9 +138,9 @@ namespace MyDiplomDelivery.Controllers
             var list = new EditDeliveryViewModel
             {
                 Orders = orders,
-                DeliveryId = delivery.Id,
+                DeliveryId = delivery!.Id,
                 CreationTime = delivery.CreationTime,
-                UserId = delivery.Deliverymanid,
+                DeliveryManId = delivery.DeliveryManId,
                 Status = delivery.Status
             };
 
@@ -161,11 +155,10 @@ namespace MyDiplomDelivery.Controllers
         public async Task<IActionResult> Edit(EditDeliveryViewModel editDelivery)
         {
             Delivery delivery = await _applicationContext.Delivery.FirstOrDefaultAsync(t => t.Id == editDelivery.DeliveryId);
-            delivery.Status = editDelivery.Status;
+            delivery!.Status = editDelivery.Status;
             _applicationContext.Entry(delivery).State = EntityState.Modified;
             await _applicationContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-
     }
 }

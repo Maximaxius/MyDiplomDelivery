@@ -166,21 +166,15 @@ namespace MyDiplomDelivery.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Deliverymanid")
-                        .IsRequired()
+                    b.Property<string>("DeliveryManId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("Deliverymanid1")
-                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Deliverymanid");
-
-                    b.HasIndex("Deliverymanid1");
+                    b.HasIndex("DeliveryManId");
 
                     b.ToTable("Delivery");
                 });
@@ -206,34 +200,6 @@ namespace MyDiplomDelivery.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("DeliveryDetail");
-                });
-
-            modelBuilder.Entity("MyDiplomDelivery.Models.Deliveryman", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecondName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("userId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Deliveryman");
                 });
 
             modelBuilder.Entity("MyDiplomDelivery.Models.Order", b =>
@@ -402,13 +368,7 @@ namespace MyDiplomDelivery.Migrations
                 {
                     b.HasOne("MyDiplomDelivery.Models.User", "DeliveryMan")
                         .WithMany("Deliveries")
-                        .HasForeignKey("Deliverymanid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyDiplomDelivery.Models.Deliveryman", null)
-                        .WithMany("Deliveries")
-                        .HasForeignKey("Deliverymanid1");
+                        .HasForeignKey("DeliveryManId");
 
                     b.Navigation("DeliveryMan");
                 });
@@ -435,11 +395,6 @@ namespace MyDiplomDelivery.Migrations
             modelBuilder.Entity("MyDiplomDelivery.Models.Delivery", b =>
                 {
                     b.Navigation("DeliveryDetails");
-                });
-
-            modelBuilder.Entity("MyDiplomDelivery.Models.Deliveryman", b =>
-                {
-                    b.Navigation("Deliveries");
                 });
 
             modelBuilder.Entity("MyDiplomDelivery.Models.Order", b =>

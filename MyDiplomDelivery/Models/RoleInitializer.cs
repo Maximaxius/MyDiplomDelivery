@@ -14,9 +14,9 @@ namespace MyDiplomDelivery
             {
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
             }
-            if (await roleManager.FindByNameAsync("Deliver") == null)
+            if (await roleManager.FindByNameAsync("DeliveryMan") == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("Deliver"));
+                await roleManager.CreateAsync(new IdentityRole("DeliveryMan"));
             }
             if (await roleManager.FindByNameAsync("User") == null)
             {
@@ -28,7 +28,7 @@ namespace MyDiplomDelivery
             }
             if (await userManager.FindByNameAsync(adminEmail) == null)
             {
-                User admin = new User { Email = adminEmail, UserName = adminEmail };
+                User admin = new User { Email = adminEmail, UserName = adminEmail,IsActive=true };
                 IdentityResult result = await userManager.CreateAsync(admin, password);
                 if (result.Succeeded)
                 {

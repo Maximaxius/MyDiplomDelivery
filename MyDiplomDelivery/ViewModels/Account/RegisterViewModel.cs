@@ -24,6 +24,10 @@ namespace MyDiplomDelivery.ViewModels.Account
         public string FirstName { get; set; }
 
         [Required]
+        [Display(Name = "SecondName")]
+        public string SecondName { get; set; }
+
+        [Required]
         [Display(Name = "LastName")]
         public string LastName { get; set; }
     }

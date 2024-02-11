@@ -21,7 +21,7 @@
 <form asp-action="Edit" asp-controller="Delivery" method="post">
     <input type="hidden" asp-for="@Model.DeliveryId" />
     <input type="hidden" asp-for="@Model.CreationTime" />
-    <input type="hidden" asp-for="@Model.UserId" />
+    <input type="hidden" asp-for="@Model.DeliveryManId" />
     <select id="myDropdown" asp-for="@Model.Status">
         <option value="@StatusType.Todo">@StatusType.Todo.ToString()</option>
         <option value="@StatusType.InProgress">@StatusType.InProgress.ToString()</option>

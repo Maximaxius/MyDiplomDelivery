@@ -29,6 +29,7 @@ namespace MyDiplomDelivery.Controllers
                     Email = model.Email, 
                     UserName = model.Email,
                     FirstName = model.FirstName,
+                    SecondName = model.SecondName,
                     LastName = model.LastName,                    
                 };
                 // добавляем пользователя

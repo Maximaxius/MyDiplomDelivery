@@ -12,7 +12,7 @@ using System.Security.Claims;
 
 namespace MyDiplomDelivery.Controllers
 {
-    [Authorize(Roles = "Deliver")]
+    [Authorize(Roles = "DeliveryMan")]
     public class DeliverymanController : Controller
     {
         private readonly ApplicationContext _applicationContext;
@@ -34,7 +34,7 @@ namespace MyDiplomDelivery.Controllers
             var deliveryDetails = await _applicationContext.DeliveryDetail
                 .Include(t => t.Order)
                 .Include(t => t.Delivery)
-                .Where(t => t.Delivery.Deliverymanid == user.Id && (t.Order.Status == StatusType.InProgress
+                .Where(t => t.Delivery.DeliveryManId == user.Id && (t.Order.Status == StatusType.InProgress
                 || t.Order.Status == StatusType.Cancelled
                 || t.Order.Status == StatusType.Completed)).ToListAsync();
             
@@ -56,35 +56,7 @@ namespace MyDiplomDelivery.Controllers
 
             return View(list);
         }
-
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(DeliverymanViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.GetUserAsync(HttpContext.User);
-                var log = new Deliveryman
-                {
-                    userId = user.Id,
-                    FirstName = model.FirstName,
-                    SecondName = model.SecondName,
-                    LastName = model.LastName,
-                    IsActive = model.IsActive
-                };
-
-                await _applicationContext.Deliveryman.AddAsync(log);
-                await _applicationContext.SaveChangesAsync();
-                return RedirectToAction("Index", "Home");
-            }
-
-            return View(model);
-        }
+        
 
         [HttpGet]
         public async Task<IActionResult> Order(string num)
@@ -94,50 +66,23 @@ namespace MyDiplomDelivery.Controllers
             {
                 DeliveryManEditOrderViewModel viewModel = new DeliveryManEditOrderViewModel
                 {
-                    Order = Order
+                    Number = Order.Number,
+                    Status = Order.Status,
                 };
                 return View(viewModel);
             }
             return RedirectToAction("Index");
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Order(DeliveryManEditOrderViewModel editOrder)
         {
-            _applicationContext.Entry(editOrder.Order).State = EntityState.Modified;
+            var Order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Number == editOrder.Number);
+            Order!.Status = editOrder.Status;
+
+            _applicationContext.Entry(Order).State = EntityState.Modified;
             await _applicationContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-
-
-
-
-
-
-
-
-
-        //[HttpGet]
-        //public async Task<IActionResult> Edit(string num)
-        //{
-        //    var Order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Number == num);
-        //    if (Order != null)
-        //    {
-        //        return View(Order);
-        //    }
-
-        //    return RedirectToAction("Index", "Home");
-        //}
-        //Поменятьь и спросить как нарисовал
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(int id)
-        //{
-        //    var deliveryman = await _applicationContext.Deliveryman.FirstOrDefaultAsync(order => order.id == id);
-        //    deliveryman.IsActive = !deliveryman.IsActive;
-        //    _applicationContext.Entry(deliveryman).State = EntityState.Modified;
-        //    await _applicationContext.SaveChangesAsync();
-        //    return RedirectToAction("Index", "Home");
-        //}
     }
 }

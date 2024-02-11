@@ -5,6 +5,7 @@ namespace MyDiplomDelivery.ViewModels.DeliveryMan
 {
     public class DeliveryManEditOrderViewModel
     {
-        public Order Order { get; set; }
+        public string? Number { get; set; }
+        public StatusType Status { get; set; }
     }
 }

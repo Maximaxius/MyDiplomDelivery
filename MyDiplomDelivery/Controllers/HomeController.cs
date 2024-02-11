@@ -15,15 +15,13 @@ namespace MyDiplomDelivery.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationContext _applicationContext;
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationContext applicationContext)
+        public HomeController(ApplicationContext applicationContext)
         {
-            _logger = logger;
             _applicationContext = applicationContext;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return View();
         }

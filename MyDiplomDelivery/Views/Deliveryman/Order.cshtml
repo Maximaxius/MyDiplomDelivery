@@ -1,18 +1,12 @@
 ﻿@model MyDiplomDelivery.ViewModels.DeliveryMan.DeliveryManEditOrderViewModel
-<h2>Order № @Model.Order.Number</h2>
+<h2>Order № @Model.Number</h2>
 
 
 <form asp-action="Order" asp-controller="Deliveryman" method="post">
-    <input type="hidden" asp-for="@Model.Order.Id" />
-    <input type="hidden" asp-for="@Model.Order.Number" />
-    <input type="hidden" asp-for="@Model.Order.From" />
-    <input type="hidden" asp-for="@Model.Order.To" />
-    <input type="hidden" asp-for="@Model.Order.Comment" />
-    <input type="hidden" asp-for="@Model.Order.Name" />
-    <input type="hidden" asp-for="@Model.Order.Description" />
+    <input type="hidden" asp-for="@Model.Number" />
 
-    <label asp-for="@Model.Order.Status">Status</label><br />
-    <select id="myDropdown" asp-for="@Model.Order.Status">
+    <label asp-for="@Model.Status">Status</label><br />
+    <select id="myDropdown" asp-for="@Model.Status">
         <option value="@StatusType.InProgress">@StatusType.InProgress.ToString()</option>
         <option value="@StatusType.Completed">@StatusType.Completed.ToString()</option>
         <option value="@StatusType.Cancelled">@StatusType.Cancelled.ToString()</option>

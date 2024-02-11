@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyDiplomDelivery.Contexts;
+using MyDiplomDelivery.Enums;
 using MyDiplomDelivery.Models;
 using MyDiplomDelivery.ViewModels.Admin;
 using MyDiplomDelivery.ViewModels.Delivery;
@@ -85,6 +86,36 @@ namespace MyDiplomDelivery.Controllers
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> AutoGenUserOrder() //для авто генерации пользователей 
+        {
+            for (int i = 0; i <= 5; i++)
+            {
+                string userEmail = $"user{i}@gmail.com";
+                string password = "_Aa123456";
+                User user = new User
+                {
+                    Email = userEmail,
+                    UserName = userEmail,
+                    FirstName = "FirstName",
+                    SecondName = "SecondName",
+                    LastName = "LastName",
+                    IsActive = true,
+                };
+                await _userManager.CreateAsync(user, password);
+                await _userManager.AddToRoleAsync(user, "DeliveryMan");
+
+                Order order = new Order
+                {
+                    Number = Guid.NewGuid().ToString("N"),
+                    From = "asd",
+                    Name = $"{i}",
+                    Status = StatusType.Todo
+                };
+                await _applicationContext.Order.AddAsync(order);
+            }
+            return RedirectToAction("UserList", "Roles");
         }
 
     }

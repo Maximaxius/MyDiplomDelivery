@@ -8,8 +8,7 @@ namespace MyDiplomDelivery.ViewModels.Delivery
         public int DeliveryId { get; set; }
         public StatusType Status { get; set; }
         public DateTime CreationTime { get; set; }
-        //public int DeliverymanId { get; set; }
-        public string UserId { get; set; }
+        public string? DeliveryManId { get; set; }
         public List<Order> Orders { get; set; }
     }
 }

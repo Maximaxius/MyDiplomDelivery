@@ -15,7 +15,6 @@ namespace MyDiplomDelivery.Contexts
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Delivery> Delivery { get; set; }
         public virtual DbSet<DeliveryDetail> DeliveryDetail { get; set; }
-        public virtual DbSet<Deliveryman> Deliveryman { get; set; }
         public virtual DbSet<Order> Order { get; set; }
     }
 }

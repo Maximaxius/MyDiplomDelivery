@@ -12,7 +12,6 @@ namespace MyDiplomDelivery.Models
         public string? Description { get; set; }
         public string? Comment { get; set; }
         public StatusType Status { get; set; }
-
         public List<DeliveryDetail> DeliveryDetails { get; set; }
 
         //Добавть  время добавления ??? тип когда пользователь оставил/сделал заказ
