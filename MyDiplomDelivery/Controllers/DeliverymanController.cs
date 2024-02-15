@@ -27,9 +27,7 @@ namespace MyDiplomDelivery.Controllers
         }
         public async Task<IActionResult> IndexAsync()
         {
-            ///проверка на активность 
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            ////спецификация на админа мб куданибуть еще
 
             var deliveryDetails = await _applicationContext.DeliveryDetail
                 .Include(t => t.Order)

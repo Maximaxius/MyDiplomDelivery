@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MyDiplomDelivery.Contexts;
 using MyDiplomDelivery.Models;
 using System.Data;
 
@@ -23,27 +25,27 @@ namespace MyDiplomDelivery.MiddleWare
                 // Получаем информацию о пользователе, включая статус IsActive
                 using var scope = _serviceScopeFactory.CreateScope();
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-                var user = await userManager.GetUserAsync(context.User);            
+                var user = await userManager.GetUserAsync(context.User);
 
-                //if (!user.IsActive && context.Request.Path != "/Account/AccessDenied" && !context.User.IsInRole("User"))
-                //{
-                //    //if (context.User.IsInRole("DeliveryMan") || context.User.IsInRole("Manager"))
-                //    //{
-                //    //    context.Response.Redirect("/Account/Logout");
-                //    //    return;
-                //    //}
-                //    // Пользователь не активен, перенаправляем на страницу "AccessDenied"
-                //    context.Response.Redirect("/Account/AccessDenied");
-                                        
-                //    return;                    
-                //}
+                var accountHomeIndexPath = "/";
+                var accountHomeGetOrderDetailPath = "/Home/GetOrderDetail"; 
+                var accountAccessDeniedPath = "/Account/AccessDenied";
+                var accountAccountLogoutPath = "/Account/Logout";
+                var accountOrderCreatePath = "/Order/Create";
 
-                //if (context.Request.Path == "/Account/AccessDenied")
-                //{
-                //    context.Response.Redirect("/Account/Logout");
-                //    context.Response.Redirect("/");
-                //    return;
-                //}
+                var applicationContext = context.RequestServices.GetService(typeof(ApplicationContext)) as ApplicationContext;
+                int num = await applicationContext.Order.CountAsync();      //Кривое доступ к созданию заказа
+                var accountOrderSuccessPath = $"/Order/Success/{num}";
+
+                var ExcludePaths = new List<string> { accountHomeGetOrderDetailPath, accountHomeIndexPath, accountAccessDeniedPath, accountAccountLogoutPath, accountOrderCreatePath, accountOrderSuccessPath };
+
+                if (!user.IsActive && !ExcludePaths.Contains(context.Request.Path))
+                {                    
+                    // Пользователь не активен, перенаправляем на страницу "AccessDenied"
+                    context.Response.Redirect("/Account/AccessDenied");
+
+                    return;
+                }
 
             }
 

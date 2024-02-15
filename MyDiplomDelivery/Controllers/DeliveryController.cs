@@ -154,8 +154,8 @@ namespace MyDiplomDelivery.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditDeliveryViewModel editDelivery)
         {
-            Delivery delivery = await _applicationContext.Delivery.FirstOrDefaultAsync(t => t.Id == editDelivery.DeliveryId);
-            delivery!.Status = editDelivery.Status;
+            Delivery delivery = await _applicationContext.Delivery.FirstAsync(t => t.Id == editDelivery.DeliveryId);
+            delivery.Status = editDelivery.Status;
             _applicationContext.Entry(delivery).State = EntityState.Modified;
             await _applicationContext.SaveChangesAsync();
             return RedirectToAction("Index");
