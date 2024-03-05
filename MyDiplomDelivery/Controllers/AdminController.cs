@@ -115,7 +115,7 @@ namespace MyDiplomDelivery.Controllers
                 };
                 await _applicationContext.Order.AddAsync(order);
             }
-            return RedirectToAction("UserList", "Roles");
+            return RedirectToAction("Index");
         }
 
     }

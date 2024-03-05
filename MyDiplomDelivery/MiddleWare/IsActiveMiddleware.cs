@@ -28,19 +28,17 @@ namespace MyDiplomDelivery.MiddleWare
                 var user = await userManager.GetUserAsync(context.User);
 
                 var accountHomeIndexPath = "/";
-                var accountHomeGetOrderDetailPath = "/Home/GetOrderDetail"; 
+                var accountHomeGetOrderDetailPath = "/Home/GetOrderDetail";
                 var accountAccessDeniedPath = "/Account/AccessDenied";
                 var accountAccountLogoutPath = "/Account/Logout";
                 var accountOrderCreatePath = "/Order/Create";
 
-                var applicationContext = context.RequestServices.GetService(typeof(ApplicationContext)) as ApplicationContext;
-                int num = await applicationContext.Order.CountAsync();      //Кривое доступ к созданию заказа
-                var accountOrderSuccessPath = $"/Order/Success/{num}";
+                var accountOrderSuccessPath = $"/Order/Success";
 
                 var ExcludePaths = new List<string> { accountHomeGetOrderDetailPath, accountHomeIndexPath, accountAccessDeniedPath, accountAccountLogoutPath, accountOrderCreatePath, accountOrderSuccessPath };
 
                 if (!user.IsActive && !ExcludePaths.Contains(context.Request.Path))
-                {                    
+                {
                     // Пользователь не активен, перенаправляем на страницу "AccessDenied"
                     context.Response.Redirect("/Account/AccessDenied");
 

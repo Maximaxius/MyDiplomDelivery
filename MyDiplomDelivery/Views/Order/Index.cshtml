@@ -4,14 +4,14 @@
 
     @if (Model.Any())
     {
-        <table>
+        <table class="table table-bordered border border-primary table-sm align-middle table-light">
             <tr>
+                <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Status</th>
                 <th>From</th>
-                <th>To</th>
-                <th>Id</th>
+                <th>To</th>                
                 <th>Number</th>
                 <th>Comment</th>
             </tr>
@@ -19,12 +19,12 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>@item.Id</td>
                     <td>@item.Name</td>
                     <td>@item.Description</td>
                     <td class="status">@item.Status</td>
                     <td>@item.From</td>
                     <td>@item.To</td>
-                    <td>@item.Id</td>
                     <td>@item.Number</td>
                     <td>@item.Comment</td>
                     <td>

@@ -79,8 +79,12 @@ namespace MyDiplomDelivery.Controllers
                 await _applicationContext.SaveChangesAsync();
 
                 var order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Number == log.Number);
-   
-                return RedirectToAction("Success", "Order", new { id = order!.Id });
+
+                ////////
+                TempData["num"] = log.Number;
+
+
+                return RedirectToAction("Success", "Order");
             }
 
             return View(model);
@@ -88,22 +92,20 @@ namespace MyDiplomDelivery.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> SuccessAsync(int id)
+        public IActionResult Success()
         {
-            var order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Id == id);
-
-            if (order == null)
+            if (TempData.TryGetValue("num", out var data))
             {
-                return RedirectToAction("Create", "Order");
-            }
+                string num = data.ToString();              
 
-            var viewModel = new SuccessViewModel
-            {
-                Number = order.Number
-            };
-            return View(viewModel);
+                var viewModel = new SuccessViewModel
+                {
+                    Number = num
+                };
+                return View(viewModel);
+            }            
+            return RedirectToAction("Create", "Order");
         }
-
 
 
         public async Task<IActionResult> Delete(string num)

@@ -1,33 +1,24 @@
 ﻿@model MyDiplomDelivery.ViewModels.O.CreateOrderViewModel
-@* сделать стили или поменять старые  *@
+@*    *@
 <h2>Создать заказ</h2>
-<form method="post" asp-controller="Order" asp-action="Create" enctype="multipart/form-data">
+<form method="post" asp-controller="Order" asp-action="Create" enctype="multipart/form-data">     
+    
+    <label asp-for="Name"></label><br />
+    <input asp-for="Name" type="text" placeholder="Name" /><br />
+    
+    <label asp-for="Description"></label><br/>
+    <textarea asp-for="Description" cols="40" rows="3" placeholder="Description"></textarea><br />    
 
-    <div class="ad-form__amount ad-form__bottom">
-        <p class="ad-input__text--name">Name product</p>
-        <input name="Name" type="text" class="ad-input__name" placeholder="Name">
-    </div>
+    <label asp-for="From"></label><br />
+    <textarea asp-for="From" cols="40" rows="3" class="ad-input__description" placeholder="From"></textarea><br />
 
-    <div class="ad-form__description ad-form__bottom">
-        <p class="ad-input__text--description">Description product </p>
-        <textarea name="Description" cols="40" rows="3" class="ad-input__description" placeholder="Description"></textarea>
-    </div>
-
-    <div class="ad-form__description ad-form__bottom">
-        <p class="ad-input__text--description">From product </p>
-        <textarea name="From" cols="40" rows="3" class="ad-input__description" placeholder="From"></textarea>
-    </div>
-
-    <div class="ad-form__description ad-form__bottom">
-        <p class="ad-input__text--description">To product </p>
-        <textarea name="To" cols="40" rows="3" class="ad-input__description" placeholder="To"></textarea>
-    </div>
-
+    <label asp-for="To"></label><br />
+    <textarea asp-for="To" cols="40" rows="3" class="ad-input__description" placeholder="To"></textarea><br />
 
     <button type="submit">Send data</button>
     <button type="submit" class="show" asp-controller="Home" asp-action="Index">Back</button>  
 </form>
-<a class="show" asp-controller="Home" asp-action="Index">Back</a>  @* посмотреть как в кнопку и почему не работало  *@
+<a class="show btn btn-primary" asp-controller="Home" asp-action="Index">Back</a>
 
 @section Links{
     <link rel="stylesheet" href="~/css/Inp.css" asp-append-version="true" />

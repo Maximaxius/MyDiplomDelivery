@@ -59,7 +59,13 @@ namespace MyDiplomDelivery.Controllers
         [HttpGet]
         public async Task<IActionResult> Order(string num)
         {
-            var Order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Number == num);
+            ///Везде проверку по ид пользлвателя DElivManID
+            //var user = await _userManager.GetUserAsync(HttpContext.User);
+            //var delivery = await _applicationContext.Delivery.Include(t => t.DeliveryDetails).Where(x => x.DeliveryManId == user.Id).ToListAsync();
+            //var orderIds = delivery.SelectMany(x =>x.DeliveryDetails).Select(x=> x.OrderId).ToList();
+            //if(!orderIds.Contains(num))
+
+            var Order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Number == num /*&& order.*/);
             if (Order != null)
             {
                 DeliveryManEditOrderViewModel viewModel = new DeliveryManEditOrderViewModel

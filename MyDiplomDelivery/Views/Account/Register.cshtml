@@ -1,7 +1,8 @@
 ﻿@model MyDiplomDelivery.ViewModels.Account.RegisterViewModel
-<h2>Регистрация нового пользователя</h2>
-<div class="form-container">
-    <form method="post" asp-controller="Account" asp-action="Register" class="form">
+
+<div class="form-container position-absolute top-50 start-50 translate-middle">
+    <h2>Регистрация нового пользователя</h2>
+    <form method="post" asp-controller="Account" asp-action="Register" class=" center">
         <div asp-validation-summary="ModelOnly"></div>
         <div>
             <label asp-for="Email"></label><br />
