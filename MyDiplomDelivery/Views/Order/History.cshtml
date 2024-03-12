@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MyDiplomDelivery.ViewModels.O.OrderViewModel>
+<div>
+    <h3>History</h3>
+
+    @if (Model.Any())
+    {
+        <table class="table table-bordered border border-primary table-sm align-middle table-light">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Number</th>
+                <th>Comment</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td class="status">@item.Status</td>
+                    <td>@item.From</td>
+                    <td>@item.To</td>
+                    <td>@item.Number</td>
+                    <td>@item.Comment</td>
+                </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        <p>История пуста</p>
+    }
+
+</div>
+
+@section Scripts{
+    <script src="~/js/Color.js" asp-append-version="true"></script>
+}
+@section Links{
+    <link rel="stylesheet" href="~/css/Orders.css" asp-append-version="true" />
+}

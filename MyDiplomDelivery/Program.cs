@@ -5,6 +5,8 @@ using MyDiplomDelivery.Models;
 using System.Data;
 using System;
 using MyDiplomDelivery.MiddleWare;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace MyDiplomDelivery
 {
@@ -19,8 +21,22 @@ namespace MyDiplomDelivery
             builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews().AddDataAnnotationsLocalization().AddViewLocalization(); ;
 
+            builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            builder.Services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("ru")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture("ru");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
 
             var app = builder.Build();
 
@@ -33,6 +49,7 @@ namespace MyDiplomDelivery
             }
 
             app.UseHttpsRedirection();
+            app.UseRequestLocalization();
             app.UseStaticFiles();
 
             app.UseRouting();

@@ -29,6 +29,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Create">Create a order</a>
                         </li>
 
+                        @if (User.IsInRole("User"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="History">History</a>
+                            </li>
+                        }
+
                         @if (User.IsInRole("Manager"))
                         {
                             <li class="nav-item">
@@ -93,6 +100,9 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - MyDiplomDelivery - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div>
+                @await Html.PartialAsync("_SelectLanguagePartial")
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

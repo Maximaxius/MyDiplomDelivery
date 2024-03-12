@@ -10,5 +10,6 @@ namespace MyDiplomDelivery.Models
         public string? SecondName { get; set; }
         public bool IsActive { get; set; }
         public List<Delivery> Deliveries { get; set; }
+        public List<Order> Orders { get; set; }
     }
 }

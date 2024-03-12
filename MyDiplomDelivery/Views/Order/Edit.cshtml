@@ -1,26 +1,27 @@
 ﻿@model MyDiplomDelivery.ViewModels.O.OrderEditOrderViewModel
-<h2>Order № @Model.Order.Id</h2>
+<h2>Order № @Model.Id</h2>
 <form asp-action="Edit" asp-controller="Order" method="post">
-    <input type="hidden" asp-for="@Model.Order.Id" />
-    <input type="hidden" asp-for="@Model.Order.Number" />
+    <input type="hidden" asp-for="@Model.Id" />
+    <input type="hidden" asp-for="@Model.Number" />
+    <input type="hidden" asp-for="@Model.UserId" />
 
-    <label asp-for="@Model.Order.Name">Name</label><br />
-    <input type="text" placeholder="Name" asp-for="@Model.Order.Name" /><br />
+    <label asp-for="@Model.Name">Name</label><br />
+    <input type="text" placeholder="Name" asp-for="@Model.Name" /><br />
 
-    <label asp-for="@Model.Order.From">From</label><br />
-    <input type="text" placeholder="From" asp-for="@Model.Order.From" /><br />
+    <label asp-for="@Model.From">From</label><br />
+    <input type="text" placeholder="From" asp-for="@Model.From" /><br />
 
-    <label asp-for="@Model.Order.To">To</label><br />
-    <input type="text" placeholder="To" asp-for="@Model.Order.To" /><br />
+    <label asp-for="@Model.To">To</label><br />
+    <input type="text" placeholder="To" asp-for="@Model.To" /><br />
 
-    <label asp-for="@Model.Order.Description">Description</label><br />
-    <input type="text" placeholder="Description" asp-for="@Model.Order.Description" /><br />
+    <label asp-for="@Model.Description">Description</label><br />
+    <input type="text" placeholder="Description" asp-for="@Model.Description" /><br />
 
-    <label asp-for="@Model.Order.Comment">Comment</label><br />
-    <input type="text" placeholder="Comment" asp-for="@Model.Order.Comment" /><br />
+    <label asp-for="@Model.Comment">Comment</label><br />
+    <input type="text" placeholder="Comment" asp-for="@Model.Comment" /><br />
 
-    <label asp-for="@Model.Order.Status">Status</label><br />
-    <select id="myDropdown" asp-for="@Model.Order.Status">
+    <label asp-for="@Model.Status">Status</label><br />
+    <select id="myDropdown" asp-for="@Model.Status">
         <br />
         <option value="@StatusType.Todo">@StatusType.Todo.ToString()</option>
         <option value="@StatusType.InProgress">@StatusType.InProgress.ToString()</option>
