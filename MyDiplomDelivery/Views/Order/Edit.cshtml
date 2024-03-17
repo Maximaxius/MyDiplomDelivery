@@ -1,26 +1,29 @@
 ﻿@model MyDiplomDelivery.ViewModels.O.OrderEditOrderViewModel
-<h2>Order № @Model.Id</h2>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<h2>@Localizer["Order"] № @Model.Id</h2>
 <form asp-action="Edit" asp-controller="Order" method="post">
     <input type="hidden" asp-for="@Model.Id" />
     <input type="hidden" asp-for="@Model.Number" />
     <input type="hidden" asp-for="@Model.UserId" />
 
-    <label asp-for="@Model.Name">Name</label><br />
-    <input type="text" placeholder="Name" asp-for="@Model.Name" /><br />
+    <label asp-for="@Model.Name">@Localizer["Name"]</label><br />
+    <input type="text" placeholder="@Localizer["Name"]" asp-for="@Model.Name" /><br />
 
-    <label asp-for="@Model.From">From</label><br />
-    <input type="text" placeholder="From" asp-for="@Model.From" /><br />
+    <label asp-for="@Model.From">@Localizer["From"]</label><br />
+    <input type="text" placeholder="@Localizer["From"]" asp-for="@Model.From" /><br />
 
-    <label asp-for="@Model.To">To</label><br />
-    <input type="text" placeholder="To" asp-for="@Model.To" /><br />
+    <label asp-for="@Model.To">@Localizer["To"]</label><br />
+    <input type="text" placeholder="@Localizer["To"]" asp-for="@Model.To" /><br />
 
-    <label asp-for="@Model.Description">Description</label><br />
-    <input type="text" placeholder="Description" asp-for="@Model.Description" /><br />
+    <label asp-for="@Model.Description">@Localizer["Description"]</label><br />
+    <input type="text" placeholder="@Localizer["Description"]" asp-for="@Model.Description" /><br />
 
-    <label asp-for="@Model.Comment">Comment</label><br />
-    <input type="text" placeholder="Comment" asp-for="@Model.Comment" /><br />
+    <label asp-for="@Model.Comment">@Localizer["Comment"]</label><br />
+    <input type="text" placeholder="@Localizer["Comment"]" asp-for="@Model.Comment" /><br />
 
-    <label asp-for="@Model.Status">Status</label><br />
+    <label asp-for="@Model.Status">@Localizer["Status"]</label><br />
     <select id="myDropdown" asp-for="@Model.Status">
         <br />
         <option value="@StatusType.Todo">@StatusType.Todo.ToString()</option>
@@ -29,5 +32,5 @@
         <option value="@StatusType.Cancelled">@StatusType.Cancelled.ToString()</option>
         <option value="@StatusType.Closed">@StatusType.Closed.ToString()</option>
     </select>
-    <p><input type="submit" value="Отправить" /></p>
+    <p><input type="submit" value="@Localizer["Change"]" /></p>
 </form>

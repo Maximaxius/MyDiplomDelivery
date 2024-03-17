@@ -117,19 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Check order" xml:space="preserve">
-    <value>Check order</value>
-  </data>
-  <data name="Comment on order" xml:space="preserve">
-    <value>Comment on order</value>
-  </data>
-  <data name="Invalid request" xml:space="preserve">
-    <value>Invalid request</value>
-  </data>
-  <data name="Order status" xml:space="preserve">
-    <value>Order status</value>
-  </data>
-  <data name="Welcom" xml:space="preserve">
-    <value>Welcom</value>
+  <data name="AccessDenied" xml:space="preserve">
+    <value>Доступ закрыт</value>
   </data>
 </root>

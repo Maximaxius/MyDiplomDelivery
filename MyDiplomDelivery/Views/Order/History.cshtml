@@ -1,18 +1,21 @@
 ﻿@model IEnumerable<MyDiplomDelivery.ViewModels.O.OrderViewModel>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 <div>
-    <h3>History</h3>
+    <h3>@Localizer["History"]</h3>
 
     @if (Model.Any())
     {
         <table class="table table-bordered border border-primary table-sm align-middle table-light">
             <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Number</th>
-                <th>Comment</th>
+                <th>@Localizer["Name"]</th>
+                <th>@Localizer["Description"]</th>
+                <th>@Localizer["Status"]</th>
+                <th>@Localizer["From"]</th>
+                <th>@Localizer["To"]</th>
+                <th>@Localizer["Number"]</th>
+                <th>@Localizer["Comment"]</th>
             </tr>
 
             @foreach (var item in Model)
@@ -32,7 +35,7 @@
     }
     else
     {
-        <p>История пуста</p>
+        <p>@Localizer["History is empty"]</p>
     }
 
 </div>

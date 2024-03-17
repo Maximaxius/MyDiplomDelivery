@@ -1,19 +1,21 @@
 ﻿@model IEnumerable<MyDiplomDelivery.ViewModels.O.OrderViewModel>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 <div>
-    <h3>All Orders</h3>
+    <h3>@Localizer["All Orders"]</h3>
 
     @if (Model.Any())
     {
         <table class="table table-bordered border border-primary table-sm align-middle table-light">
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>From</th>
-                <th>To</th>                
-                <th>Number</th>
-                <th>Comment</th>
+                <th>@Localizer["Name"]</th>
+                <th>@Localizer["Description"]</th>
+                <th>@Localizer["Status"]</th>
+                <th>@Localizer["From"]</th>
+                <th>@Localizer["To"]</th>
+                <th>@Localizer["Number"]</th>
+                <th>@Localizer["Comment"]</th>
             </tr>
 
             @foreach (var item in Model)
@@ -28,10 +30,10 @@
                     <td>@item.Number</td>
                     <td>@item.Comment</td>
                     <td>
-                        <button class="show"><a asp-controller="Order" asp-action="Delete" asp-route-num="@item.Number">Удалить</a></button>
+                        <button class="show"><a asp-controller="Order" asp-action="Delete" asp-route-num="@item.Number">@Localizer["Delete"]</a></button>
                     </td>
                     <td>
-                        <button class="show"><a asp-controller="Order" asp-action="Edit" asp-route-num="@item.Number">Редактировать</a></button>
+                        <button class="show"><a asp-controller="Order" asp-action="Edit" asp-route-num="@item.Number">@Localizer["Edit"]</a></button>
                     </td>
                 </tr>
             }
@@ -40,7 +42,7 @@
     }
     else
     {
-        <p>История пуста</p>
+        <p>@Localizer["History is empty"]</p>
     }
 
 </div>

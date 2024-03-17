@@ -1,14 +1,18 @@
 ﻿@model MyDiplomDelivery.ViewModels.Delivery.DeliveryCreateViewModel
-@* сделать стили или поменять старые  *@
-<h2>Создать заказ</h2>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<h2>@Localizer["Create delivery"]</h2>
 <form method="post" asp-controller="Delivery" asp-action="Create" enctype="multipart/form-data">
+    <label asp-for="SelectDeliveryMan">@Localizer["SelectDeliveryMan"]</label>
     <select class="form-select" asp-items="Model.DeliveryManList" asp-for="SelectDeliveryMan"></select>
 
-    @Html.Label("Orders")
-    @Html.ListBoxFor(model => model.SelectedOrders, new MultiSelectList(Model.OrdersList, "Value", "Text"),
-    new { @class = "form-control chosen", multiple = "multiple" })
+    <label asp-for="SelectDeliveryMan">@Localizer["SelectOrders"]</label>
+    @* @Html.ListBoxFor(model => model.SelectedOrders, new MultiSelectList(Model.OrdersList, "Value", "Text"),
+    new { @class="form-control form-control-chosen", multiple = "multiple" }) *@
+    <select asp-for="SelectedOrders" class="form-control form-control-chosen" asp-items="Model.OrdersList" multiple="multiple"></select>
 
-    <button type="submit">Send data</button>
+    <button type="submit">@Localizer["Create"]</button>
 </form>
 
 

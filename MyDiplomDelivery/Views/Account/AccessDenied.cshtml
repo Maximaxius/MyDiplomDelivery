@@ -1,3 +1,7 @@
-﻿<div class="position-absolute top-50 start-50 translate-middle">
-    <h2>Доступ закрыт</h2>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+<div class="position-absolute top-50 start-50 translate-middle">
+    <h2>@Localizer["AccessDenied"]</h2>
 </div>

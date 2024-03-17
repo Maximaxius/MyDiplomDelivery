@@ -64,9 +64,7 @@ namespace MyDiplomDelivery
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
-            ///Разобраться как сделать чтобы бд с=делалась авто модель/RoleInitializer https://metanit.com/sharp/aspnet5/16.12.php
-            /// Ихменил тип мейна на асинхронный по видео https://www.youtube.com/watch?v=Y6DCP-yH-9Q
+            //auto bd
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;

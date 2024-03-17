@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -22,28 +25,22 @@
                     <ul class="navbar-nav flex-grow-1">
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Create">Create a order</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Create">@Localizer["Create order"]</a>
                         </li>
 
-                        @if (User.IsInRole("User"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="History">History</a>
-                            </li>
-                        }
 
                         @if (User.IsInRole("Manager"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">All order</a>                            
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">@Localizer["All order"]</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Delivery" asp-action="Index">Delivery</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Delivery" asp-action="Index">@Localizer["Delivery"]</a>
                             </li>
                         }
 
@@ -51,7 +48,7 @@
                         @if (User.IsInRole("DeliveryMan"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Deliveryman" asp-action="Index">Deliveryman</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Deliveryman" asp-action="Index">@Localizer["Deliveryman"]</a>
                             </li>
                         }
 
@@ -69,21 +66,27 @@
                     </ul>
 
                     <ul class="navbar-nav">
+                        @if (User.IsInRole("User"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="History">@Localizer["History"]</a>
+                            </li>
+                        }
                     @if (User.Identity.IsAuthenticated)
                     {
                         <h5 class="nav-item">@User.Identity.Name</h5>
 
                         <form class="nav-auth--btn" method="post" asp-controller="Account" asp-action="Logout">
-                            <input type="submit" value="Выход" />
+                                <input type="submit" value="@Localizer["Logout"]" />
                         </form>
                     }
                     else
                     {
                         <span class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Вход</a>
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">@Localizer["Login"]</a>
                         </span>
                         <span class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Регистрация</a>
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">@Localizer["Register"]</a>
                         </span>
                     }
                     </ul>
@@ -98,8 +101,8 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - MyDiplomDelivery - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="container d-flex flex-wrap justify-content-between align-items-center">
+            <div> &copy; 2024 - MyDiplomDelivery - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></div>
             <div>
                 @await Html.PartialAsync("_SelectLanguagePartial")
             </div>

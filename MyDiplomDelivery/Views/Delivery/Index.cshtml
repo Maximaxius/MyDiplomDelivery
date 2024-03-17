@@ -1,15 +1,27 @@
 ﻿@model IEnumerable<MyDiplomDelivery.ViewModels.Delivery.AllDeliveryViewModel>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 <div>
-    <button class="show"><a asp-controller="Delivery" asp-action="Create">Create</a></button>
+    <button class="btn btn-lg btn-primary" style="position: relative;left: 50%;transform: translate(-50%, 0); margin-top: 25px ; margin-bottom: 25px;">
+        <a asp-controller="Delivery" asp-action="Create">
+            @Localizer["Create"]            
+        </a>
+    </button>
     @if (Model.Any())
     {
         <table class="table table-bordered border border-primary table-sm align-middle table-light">
             <tr>
                 <th>Id</th>
-                <th>CreationTime</th>
-                <th>Status</th>
-                <th>deliveryMan</th>
+                <th>
+                    @Localizer["CreationTime"]                    
+                </th>
+                <th>
+                    @Localizer["Status"]                    
+                </th>
+                <th>
+                    @Localizer["deliveryMan"]                    
+                </th>
             </tr>
 
             @foreach (var item in Model)
@@ -20,7 +32,11 @@
                     <td class="status">@item.Status</td>  
                     <td>@item.FirstName @item.SecondName @item.LastName</td>                        
                     <td>
-                        <button class="show"><a asp-controller="Delivery" asp-action="Edit" asp-route-id="@item.Id">Редактировать</a></button>
+                        <button class="show">
+                            <a asp-controller="Delivery" asp-action="Edit" asp-route-id="@item.Id">
+                                @Localizer["Edit"]
+                            </a>
+                        </button>
                     </td>
                 </tr>
             }
@@ -28,7 +44,7 @@
     }
     else
     {
-        <p>История пуста</p>
+        <p>@Localizer["History is empty"]</p>
     }
 </div>
 

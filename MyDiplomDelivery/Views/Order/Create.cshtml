@@ -1,23 +1,27 @@
 ﻿@model MyDiplomDelivery.ViewModels.O.CreateOrderViewModel
-@*    *@
-<h2>Создать заказ</h2>
-<form method="post" asp-controller="Order" asp-action="Create" enctype="multipart/form-data">     
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<div class="position-absolute top-50 start-50 translate-middle">
+<h2>@Localizer["Create order"]</h2>
+    <form method="post" asp-controller="Order" asp-action="Create" enctype="multipart/form-data">     
     
-    <label asp-for="Name"></label><br />
-    <input asp-for="Name" type="text" placeholder="Name" /><br />
+        <label asp-for="Name">@Localizer["Name"]</label><br />
+        <input asp-for="Name" type="text" placeholder="@Localizer["Name"]" /><br />
     
-    <label asp-for="Description"></label><br/>
-    <textarea asp-for="Description" cols="40" rows="3" placeholder="Description"></textarea><br />    
+        <label asp-for="Description">@Localizer["Description"]</label><br />
+        <textarea asp-for="Description" cols="40" rows="3" placeholder="@Localizer["Description"]"></textarea><br />
 
-    <label asp-for="From"></label><br />
-    <textarea asp-for="From" cols="40" rows="3" class="ad-input__description" placeholder="From"></textarea><br />
+        <label asp-for="From">@Localizer["From"]</label><br />
+        <textarea asp-for="From" cols="40" rows="3" class="ad-input__description" placeholder="@Localizer["From"]"></textarea><br />
 
-    <label asp-for="To"></label><br />
-    <textarea asp-for="To" cols="40" rows="3" class="ad-input__description" placeholder="To"></textarea><br />
+        <label asp-for="To">@Localizer["To"]</label><br />
+        <textarea asp-for="To" cols="40" rows="3" class="ad-input__description" placeholder="@Localizer["To"]"></textarea><br />
 
-    <button type="submit">Send data</button>
-    <button type="submit" class="show" asp-controller="Home" asp-action="Index">Back</button>  
-</form>
+        <button type="submit" class="btn btn-lg btn-primary" style="margin-top: 10px;">@Localizer["Create"]</button>
+        <button type="submit" class="show btn btn-lg btn-primary" style="margin-top: 10px;" asp-controller="Home" asp-action="Index">@Localizer["Back"]</button>
+    </form>
+</div>
 
 @section Links{
     <link rel="stylesheet" href="~/css/Inp.css" asp-append-version="true" />

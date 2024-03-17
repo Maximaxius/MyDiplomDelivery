@@ -6,11 +6,11 @@
 
 <div class="text-center">
 
-    <h1 class="display-4">@Localizer["String1"]</h1>
+    <h1 class="display-4">@Localizer["Welcom"]</h1>
 
     <input type="text" id="inputData">
     <button onclick="sendRequest()">
-        Проверить заказ
+        @Localizer["Check order"]
         <img src="~/img/searchIcon.svg" style="height:16px;width:16px" />
     </button>
     <div id="result"></div>
@@ -40,24 +40,24 @@
             console.log(data); // Вывод ответа в виде JSON объекта в консоль
             const result = document.querySelector('#result');
             result.innerHTML = "";
-            const statusDiv = document.createElement('div');
-            
+            const statusDiv = document.createElement('div');            
 
             // Добавляем текст внутрь созданного div
-            statusDiv.textContent = "Статус заказа" + data.status;
+            statusDiv.textContent = "@Localizer["Order status"]  " + data.status;
             
             // Добавляем созданный div в документ
             result.appendChild(statusDiv);
             // Проверяем есть ли комментарий и добавляем если есть 
             if (data.comment != null) {
                 const commentDiv = document.createElement('div');
-                commentDiv.textContent = "Комментарий по заказу" + data.comment;
+                commentDiv.textContent = "@Localizer["Comment on order"]  " + data.comment;
                 result.appendChild(commentDiv);
             }
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
-            alert ("Некоректный запрос")
+            alert("@Localizer["Invalid request"]")
+
         });
     }
 </script>}

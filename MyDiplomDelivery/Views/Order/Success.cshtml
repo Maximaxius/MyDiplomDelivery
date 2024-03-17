@@ -1,10 +1,13 @@
 ﻿@model MyDiplomDelivery.ViewModels.O.SuccessViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 <div class="position-absolute top-50 start-50 translate-middle">
-    <div>Your code to check order => 
+    <div>
+        @Localizer["Your code to check order"] =>
         <span id="sourceDiv">@Model.Number</span>
         <button class="btn btn-primary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-trigger="focus" data-bs-content="Cкопированно" onclick="copyToClipboard()">
-            Скопировать код
+            @Localizer["Copy code"]
             <img src="~/img/copyIcon.svg" style="height:24px;width:24px" />
         </button>
     </div>
@@ -13,7 +16,7 @@
    @*  <a class="show btn btn-primary" asp-controller="Home" asp-action="Index">Back</a> *@
     <form asp-controller="Home" asp-action="Index">
         <button class="w-50 btn btn-lg btn-primary" style="position: relative;left: 50%;transform: translate(-50%, 0); margin-top: 25px;">
-            Go to home page
+            @Localizer["Go to home page"]
         </button>
     </form>
 </div>

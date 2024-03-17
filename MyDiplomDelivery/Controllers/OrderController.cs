@@ -172,6 +172,8 @@ namespace MyDiplomDelivery.Controllers
             return RedirectToAction("Index");
         }
 
+
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> HistoryAsync()
         {

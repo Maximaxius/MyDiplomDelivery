@@ -1,11 +1,14 @@
 ﻿@model MyDiplomDelivery.ViewModels.Delivery.EditDeliveryViewModel
-<h2>Order № @Model.DeliveryId</h2>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<h2>@Localizer["Delivery"] № @Model.DeliveryId</h2>
 
 <table>
     <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Status</th>
+        <th>@Localizer["Name"]</th>
+        <th>@Localizer["Description"]</th>
+        <th>@Localizer["Status"]</th>
     </tr>
 
     @foreach (var item in Model.Orders)
@@ -29,7 +32,7 @@
         <option value="@StatusType.Cancelled">@StatusType.Cancelled.ToString()</option>
         <option value="@StatusType.Closed">@StatusType.Closed.ToString()</option>
     </select>
-    <p><input type="submit" value="Отправить" /></p>
+    <p><input type="submit" value="@Localizer["Change"]" /></p>
 </form>
 
 @section Scripts{

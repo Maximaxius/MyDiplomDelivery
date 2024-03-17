@@ -117,19 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Check order" xml:space="preserve">
-    <value>Check order</value>
+  <data name="Create" xml:space="preserve">
+    <value>Создать</value>
   </data>
-  <data name="Comment on order" xml:space="preserve">
-    <value>Comment on order</value>
+  <data name="Create delivery" xml:space="preserve">
+    <value>Создать доставку</value>
   </data>
-  <data name="Invalid request" xml:space="preserve">
-    <value>Invalid request</value>
+  <data name="SelectDeliveryMan" xml:space="preserve">
+    <value>Выберите курьера</value>
   </data>
-  <data name="Order status" xml:space="preserve">
-    <value>Order status</value>
-  </data>
-  <data name="Welcom" xml:space="preserve">
-    <value>Welcom</value>
+  <data name="SelectOrders" xml:space="preserve">
+    <value>Выберите заказ(-ы)</value>
   </data>
 </root>

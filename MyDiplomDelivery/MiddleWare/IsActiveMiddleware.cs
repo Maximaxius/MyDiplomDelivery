@@ -34,8 +34,9 @@ namespace MyDiplomDelivery.MiddleWare
                 var accountOrderCreatePath = "/Order/Create";
 
                 var accountOrderSuccessPath = $"/Order/Success";
+                var accountOrderHistory = $"/Order/History";
 
-                var ExcludePaths = new List<string> { accountHomeGetOrderDetailPath, accountHomeIndexPath, accountAccessDeniedPath, accountAccountLogoutPath, accountOrderCreatePath, accountOrderSuccessPath };
+                var ExcludePaths = new List<string> { accountHomeGetOrderDetailPath, accountHomeIndexPath, accountAccessDeniedPath, accountAccountLogoutPath, accountOrderCreatePath, accountOrderSuccessPath, accountOrderHistory };
 
                 if (!user.IsActive && !ExcludePaths.Contains(context.Request.Path))
                 {

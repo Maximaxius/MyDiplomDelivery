@@ -117,19 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Check order" xml:space="preserve">
-    <value>Check order</value>
+  <data name="All Orders" xml:space="preserve">
+    <value>All Orders</value>
   </data>
-  <data name="Comment on order" xml:space="preserve">
-    <value>Comment on order</value>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
   </data>
-  <data name="Invalid request" xml:space="preserve">
-    <value>Invalid request</value>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
   </data>
-  <data name="Order status" xml:space="preserve">
-    <value>Order status</value>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
   </data>
-  <data name="Welcom" xml:space="preserve">
-    <value>Welcom</value>
+  <data name="History is empty" xml:space="preserve">
+    <value>History is empty</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
   </data>
 </root>

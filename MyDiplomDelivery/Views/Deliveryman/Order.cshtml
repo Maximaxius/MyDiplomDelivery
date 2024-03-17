@@ -1,15 +1,17 @@
 ﻿@model MyDiplomDelivery.ViewModels.DeliveryMan.DeliveryManEditOrderViewModel
-<h2>Order № @Model.Number</h2>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 
+<h2>@Localizer["Order"] № @Model.Number</h2>
 <form asp-action="Order" asp-controller="Deliveryman" method="post">
     <input type="hidden" asp-for="@Model.Number" />
 
-    <label asp-for="@Model.Status">Status</label><br />
+    <label asp-for="@Model.Status">@Localizer["Status"]</label><br />
     <select id="myDropdown" asp-for="@Model.Status">
         <option value="@StatusType.InProgress">@StatusType.InProgress.ToString()</option>
         <option value="@StatusType.Completed">@StatusType.Completed.ToString()</option>
         <option value="@StatusType.Cancelled">@StatusType.Cancelled.ToString()</option>
     </select>
-    <p><input type="submit" value="Отправить" /></p>
+    <p><input type="submit" value="@Localizer["Change"]" /></p>
 </form>
