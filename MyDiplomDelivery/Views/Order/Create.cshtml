@@ -5,21 +5,34 @@
 <div class="position-absolute top-50 start-50 translate-middle">
 <h2>@Localizer["Create order"]</h2>
     <form method="post" asp-controller="Order" asp-action="Create" enctype="multipart/form-data">     
-    
-        <label asp-for="Name">@Localizer["Name"]</label><br />
-        <input asp-for="Name" type="text" placeholder="@Localizer["Name"]" /><br />
-    
-        <label asp-for="Description">@Localizer["Description"]</label><br />
-        <textarea asp-for="Description" cols="40" rows="3" placeholder="@Localizer["Description"]"></textarea><br />
+        <div asp-validation-summary="ModelOnly"></div>
+        <div>
+            <label asp-for="Name">@Localizer["Name"]</label><br />
+            <input asp-for="Name" type="text" placeholder="@Localizer["Name"]" /><br />
+            <span asp-validation-for="Name"></span>
+        </div>        
 
-        <label asp-for="From">@Localizer["From"]</label><br />
-        <textarea asp-for="From" cols="40" rows="3" class="ad-input__description" placeholder="@Localizer["From"]"></textarea><br />
+        <div>
+            <label asp-for="Description">@Localizer["Description"]</label><br />
+            <textarea asp-for="Description" cols="40" rows="3" placeholder="@Localizer["Description"]"></textarea><br />
+        </div>        
 
-        <label asp-for="To">@Localizer["To"]</label><br />
-        <textarea asp-for="To" cols="40" rows="3" class="ad-input__description" placeholder="@Localizer["To"]"></textarea><br />
+        <div>
+            <label asp-for="From">@Localizer["From"]</label><br />
+            <textarea asp-for="From" cols="40" rows="3" class="ad-input__description" placeholder="@Localizer["From"]"></textarea><br />
+            <span asp-validation-for="From"></span>
+        </div>        
 
-        <button type="submit" class="btn btn-lg btn-primary" style="margin-top: 10px;">@Localizer["Create"]</button>
-        <button type="submit" class="show btn btn-lg btn-primary" style="margin-top: 10px;" asp-controller="Home" asp-action="Index">@Localizer["Back"]</button>
+        <div>
+            <label asp-for="To">@Localizer["To"]</label><br />
+            <textarea asp-for="To" cols="40" rows="3" class="ad-input__description" placeholder="@Localizer["To"]"></textarea><br />
+            <span asp-validation-for="To"></span>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-lg btn-primary" style="margin-top: 10px;">@Localizer["Create"]</button>
+            <button type="submit" class="show btn btn-lg btn-primary" style="margin-top: 10px;" asp-controller="Home" asp-action="Index">@Localizer["Back"]</button>
+        </div>
     </form>
 </div>
 

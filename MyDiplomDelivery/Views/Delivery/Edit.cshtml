@@ -4,7 +4,7 @@
 
 <h2>@Localizer["Delivery"] № @Model.DeliveryId</h2>
 
-<table>
+<table style="margin-bottom: 12px;">
     <tr>
         <th>@Localizer["Name"]</th>
         <th>@Localizer["Description"]</th>
@@ -32,7 +32,7 @@
         <option value="@StatusType.Cancelled">@StatusType.Cancelled.ToString()</option>
         <option value="@StatusType.Closed">@StatusType.Closed.ToString()</option>
     </select>
-    <p><input type="submit" value="@Localizer["Change"]" /></p>
+    <p><input type="submit" class="show btn btn-lg btn-primary" style="margin-top: 12px;" value="@Localizer["Change"]" /></p>
 </form>
 
 @section Scripts{

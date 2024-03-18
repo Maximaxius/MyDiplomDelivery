@@ -89,10 +89,8 @@ namespace MyDiplomDelivery.Controllers
                 await _applicationContext.SaveChangesAsync();
 
                 var order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Number == log.Number);
-
                 
                 TempData["num"] = log.Number;
-
 
                 return RedirectToAction("Success", "Order");
             }

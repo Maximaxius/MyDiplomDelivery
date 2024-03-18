@@ -8,14 +8,7 @@
     <select class="form-select" asp-items="Model.DeliveryManList" asp-for="SelectDeliveryMan"></select>
 
     <label asp-for="SelectDeliveryMan">@Localizer["SelectOrders"]</label>
-    @* @Html.ListBoxFor(model => model.SelectedOrders, new MultiSelectList(Model.OrdersList, "Value", "Text"),
-    new { @class="form-control form-control-chosen", multiple = "multiple" }) *@
-    <select asp-for="SelectedOrders" class="form-control form-control-chosen" asp-items="Model.OrdersList" multiple="multiple"></select>
+    <select asp-for="SelectedOrders" class="form-control chosen-select form-control-chosen" asp-items="Model.OrdersList" multiple="multiple" data-placeholder="Chose orders"></select>
 
-    <button type="submit">@Localizer["Create"]</button>
+    <p><input class="show btn btn-lg btn-primary" style="margin-top: 12px;" type="submit" value="@Localizer["Create"]" /></p>
 </form>
-
-
-@section Links{
-    <link rel="stylesheet" href="~/css/Inp.css" asp-append-version="true" />
-}

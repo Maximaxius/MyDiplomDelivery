@@ -129,7 +129,7 @@
   <data name="Order status" xml:space="preserve">
     <value>Статус заказа</value>
   </data>
-  <data name="Welcom" xml:space="preserve">
+  <data name="Welcome" xml:space="preserve">
     <value>Добро пожаловать </value>
   </data>
 </root>

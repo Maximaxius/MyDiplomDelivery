@@ -105,7 +105,7 @@ namespace MyDiplomDelivery.Controllers
                 foreach (var item in model.SelectedOrders)
                 {
                     var order = _applicationContext.Order.FirstOrDefault(t => t.Id == item);  // почемуто на await жалуется и не работает с ним
-                    order!.Status= StatusType.InProgress; // order! == что не null
+                    order!.Status= StatusType.InProgress;
                     _applicationContext.Entry(order).State = EntityState.Modified;
                     await _applicationContext.SaveChangesAsync();
                 }
