@@ -1,12 +1,10 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using MyDiplomDelivery.Contexts;
-using MyDiplomDelivery.Models;
-using System.Data;
-using System;
 using MyDiplomDelivery.MiddleWare;
+using MyDiplomDelivery.Models;
 using System.Globalization;
-using Microsoft.AspNetCore.Localization;
 
 namespace MyDiplomDelivery
 {
@@ -80,8 +78,6 @@ namespace MyDiplomDelivery
                     logger.LogError(ex, "An error occurred while seeding the database.");
                 }
             }
-
-
 
             app.Run();
         }

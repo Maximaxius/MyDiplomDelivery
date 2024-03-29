@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<MyDiplomDelivery.ViewModels.O.OrderViewModel>
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
+
 <div>
     <h3>@Localizer["All Orders"]</h3>
 
@@ -30,10 +31,14 @@
                     <td>@item.Number</td>
                     <td>@item.Comment</td>
                     <td>
-                        <button class="show"><a asp-controller="Order" asp-action="Delete" asp-route-num="@item.Number">@Localizer["Delete"]</a></button>
+                        <button class="show">
+                            <a asp-controller="Order" asp-action="Delete" asp-route-num="@item.Number">@Localizer["Delete"]</a>
+                        </button>
                     </td>
                     <td>
-                        <button class="show"><a asp-controller="Order" asp-action="Edit" asp-route-num="@item.Number">@Localizer["Edit"]</a></button>
+                        <button class="show">
+                            <a asp-controller="Order" asp-action="Edit" asp-route-num="@item.Number">@Localizer["Edit"]</a>
+                        </button>
                     </td>
                 </tr>
             }
@@ -47,9 +52,10 @@
 
 </div>
 
-@section Scripts{
+@section Scripts {
     <script src="~/js/Color.js" asp-append-version="true"></script>
 }
-@section Links{
+
+@section Links {
     <link rel="stylesheet" href="~/css/Orders.css" asp-append-version="true" />
 }

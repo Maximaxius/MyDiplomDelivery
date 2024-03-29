@@ -10,12 +10,12 @@
             <label asp-for="Name">@Localizer["Name"]</label><br />
             <input asp-for="Name" type="text" placeholder="@Localizer["Name"]" /><br />
             <span asp-validation-for="Name"></span>
-        </div>        
+        </div>
 
         <div>
             <label asp-for="Description">@Localizer["Description"]</label><br />
             <textarea asp-for="Description" cols="40" rows="3" placeholder="@Localizer["Description"]"></textarea><br />
-        </div>        
+        </div>
 
         <div>
             <label asp-for="From">@Localizer["From"]</label><br />
@@ -31,11 +31,15 @@
 
         <div>
             <button type="submit" class="btn btn-lg btn-primary" style="margin-top: 10px;">@Localizer["Create"]</button>
-            <button type="submit" class="show btn btn-lg btn-primary" style="margin-top: 10px;" asp-controller="Home" asp-action="Index">@Localizer["Back"]</button>
+            <button type="submit"
+                    class="show btn btn-lg btn-primary"
+                    style="margin-top: 10px;"
+                    asp-controller="Home"
+                    asp-action="Index">@Localizer["Back"]</button>
         </div>
     </form>
 </div>
 
-@section Links{
+@section Links {
     <link rel="stylesheet" href="~/css/Inp.css" asp-append-version="true" />
 }

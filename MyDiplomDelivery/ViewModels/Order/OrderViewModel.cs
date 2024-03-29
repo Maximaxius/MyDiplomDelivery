@@ -10,7 +10,6 @@ namespace MyDiplomDelivery.ViewModels.O
         public string? From { get; set; }
         public string? To { get; set; }
         public string? Description { get; set; }
-
         public string? Comment { get; set; }
         public StatusType Status { get; set; }
     }

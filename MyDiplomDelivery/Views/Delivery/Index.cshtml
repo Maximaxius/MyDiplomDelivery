@@ -5,7 +5,7 @@
 <div>
     <button class="btn btn-lg btn-primary" style="position: relative;left: 50%;transform: translate(-50%, 0); margin-top: 25px ; margin-bottom: 25px;">
         <a asp-controller="Delivery" asp-action="Create">
-            @Localizer["Create"]            
+            @Localizer["Create"]
         </a>
     </button>
     @if (Model.Any())
@@ -14,13 +14,13 @@
             <tr>
                 <th>Id</th>
                 <th>
-                    @Localizer["CreationTime"]                    
+                    @Localizer["CreationTime"]
                 </th>
                 <th>
-                    @Localizer["Status"]                    
+                    @Localizer["Status"]
                 </th>
                 <th>
-                    @Localizer["deliveryMan"]                    
+                    @Localizer["deliveryMan"]
                 </th>
             </tr>
 
@@ -30,12 +30,10 @@
                     <td>@item.Id</td>
                     <td>@item.CreationTime</td>
                     <td class="status">@item.Status</td>  
-                    <td>@item.FirstName @item.SecondName @item.LastName</td>                        
+                    <td>@item.FirstName @item.SecondName @item.LastName</td>
                     <td>
                         <button class="show">
-                            <a asp-controller="Delivery" asp-action="Edit" asp-route-id="@item.Id">
-                                @Localizer["Edit"]
-                            </a>
+                            <a asp-controller="Delivery" asp-action="Edit" asp-route-id="@item.Id">@Localizer["Edit"]</a>
                         </button>
                     </td>
                 </tr>

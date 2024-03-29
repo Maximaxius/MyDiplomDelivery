@@ -1,6 +1,4 @@
-﻿using MyDiplomDelivery.Enums;
-
-namespace MyDiplomDelivery.ViewModels.Admin
+﻿namespace MyDiplomDelivery.ViewModels.Admin
 {
     public class AllUsersViewModel
     {

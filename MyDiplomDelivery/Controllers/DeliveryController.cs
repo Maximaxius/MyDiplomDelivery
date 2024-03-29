@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +7,6 @@ using MyDiplomDelivery.Enums;
 using MyDiplomDelivery.Models;
 using MyDiplomDelivery.ViewModels.Delivery;
 using System.Data;
-using System.Xml.Linq;
 
 namespace MyDiplomDelivery.Controllers
 {
@@ -26,54 +24,75 @@ namespace MyDiplomDelivery.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
         {
-            var Deliverys = await _applicationContext.Delivery.Include(x => x.DeliveryMan).ToListAsync();
+            var deliveries = await _applicationContext.Delivery
+                .Include(x => x.DeliveryMan)
+                .ToListAsync();
 
-            var list = new List<AllDeliveryViewModel>();
-            foreach (var delivery in Deliverys)
+            var collection = new List<AllDeliveryViewModel>();
+            foreach (var delivery in deliveries)
             {
-                var log = new AllDeliveryViewModel
+                var viewModel = new AllDeliveryViewModel
                 {
                     Id = delivery.Id,
-                    CreationTime= delivery.CreationTime,
+                    CreationTime = delivery.CreationTime,
                     Status = delivery.Status,
                     DeliveryManId = delivery.DeliveryMan.Id,
                     FirstName = delivery.DeliveryMan.FirstName,
                     SecondName = delivery.DeliveryMan.SecondName,
                     LastName = delivery.DeliveryMan.LastName,
                 };
-                list.Add(log);
-            }            
-            return View(list);
-        }
 
+                collection.Add(viewModel);
+            }
+
+            return View(collection);
+        }
 
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var roleId = _applicationContext.Roles.FirstOrDefault(t => t.Name == "DeliveryMan")?.Id;
-            var deliveryMans = await _applicationContext.UserRoles.Where(t => t.RoleId == roleId).ToListAsync();
-            var users = await _applicationContext.Users.Where(t=>t.IsActive == true).ToListAsync();
+            var roleId = _applicationContext.Roles.FirstOrDefault(x => x.Name == "DeliveryMan")?.Id;
             
-            var model = new DeliveryCreateViewModel();
-            model.DeliveryManList = new List<SelectListItem>();
+            var deliveryMans = await _applicationContext.UserRoles
+                .Where(x => x.RoleId == roleId)
+                .ToListAsync();
+            
+            var users = await _applicationContext.Users
+                .Where(x => x.IsActive)
+                .ToListAsync();
+
+            var viewModel = new DeliveryCreateViewModel
+            {
+                DeliveryManList = new List<SelectListItem>()
+            };
+
             foreach (var deliveryMan in deliveryMans)
             {
                 foreach (var user in users)
                 {
                     if (deliveryMan.UserId == user.Id && user.IsActive == true)
                     {
-                        model.DeliveryManList.Add(new SelectListItem { Text = $"{user.FirstName} {user.SecondName} {user.LastName}", Value = user.Id.ToString() });
+                        viewModel.DeliveryManList.Add(new SelectListItem
+                        {
+                            Text = $"{user.FirstName} {user.SecondName} {user.LastName}",
+                            Value = user.Id.ToString()
+                        });
                     }
                 }
             }
 
-            model.OrdersList = new List<SelectListItem>();
-            var orders = await _applicationContext.Order.Where(t => t.Status == StatusType.Todo).ToListAsync();
+            viewModel.OrdersList = new List<SelectListItem>();
+
+            var orders = await _applicationContext.Order
+                .Where(x => x.Status == StatusType.Todo)
+                .ToListAsync();
+
             foreach (var order in orders)
             {
-                model.OrdersList.Add(new SelectListItem { Text = $"{order.Name}", Value = order.Id.ToString() });
+                viewModel.OrdersList.Add(new SelectListItem { Text = $"{order.Name}", Value = order.Id.ToString() });
             }
-            return View(model);
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -88,8 +107,10 @@ namespace MyDiplomDelivery.Controllers
                     Status = StatusType.Todo,
                     CreationTime = DateTime.Now,
                 };
+
                 await _applicationContext.Delivery.AddAsync(delivery);
                 await _applicationContext.SaveChangesAsync();
+
                 //создание DeliveryDetail
                 foreach (var item in model.SelectedOrders)
                 {
@@ -98,44 +119,52 @@ namespace MyDiplomDelivery.Controllers
                         DeliveryId = delivery.Id,
                         OrderId = item
                     };
+
                     await _applicationContext.DeliveryDetail.AddAsync(deliveryDetail);
                     await _applicationContext.SaveChangesAsync();
                 }
+
                 //Смена статуса заказов
                 foreach (var item in model.SelectedOrders)
                 {
-                    var order = _applicationContext.Order.FirstOrDefault(t => t.Id == item);  // почемуто на await жалуется и не работает с ним
-                    order!.Status= StatusType.InProgress;
+                    var order = await _applicationContext.Order.FirstOrDefaultAsync(x => x.Id == item);  
+                    order!.Status = StatusType.InProgress;
                     _applicationContext.Entry(order).State = EntityState.Modified;
+
                     await _applicationContext.SaveChangesAsync();
                 }
+
                 return RedirectToAction("Index", "Delivery");
             }
+
             return BadRequest();
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var deliveryDetails = await _applicationContext.DeliveryDetail.Include(t => t.Order).
-                Include(t => t.Delivery).
-                Where(t => t.Delivery.Id == id).ToListAsync();
-            var delivery = await _applicationContext.Delivery.FirstOrDefaultAsync(t => t.Id == id);
+            var deliveryDetails = await _applicationContext.DeliveryDetail
+                .Include(x => x.Order)
+                .Include(x => x.Delivery)
+                .Where(x => x.Delivery.Id == id)
+                .ToListAsync();
+
+            var delivery = await _applicationContext.Delivery.FirstOrDefaultAsync(x => x.Id == id);
 
             var orders = new List<Order>();
             foreach (var deliveryOrders in deliveryDetails)
             {
-                var log = new Order
+                var order = new Order
                 {
                     Name = deliveryOrders.Order.Name,
                     Description = deliveryOrders.Order.Description,
                     Status = deliveryOrders.Order.Status,
                 };
-                orders.Add(log);
+
+                orders.Add(order);
             }
 
-            var list = new EditDeliveryViewModel
+            var viewModel = new EditDeliveryViewModel
             {
                 Orders = orders,
                 DeliveryId = delivery!.Id,
@@ -144,20 +173,22 @@ namespace MyDiplomDelivery.Controllers
                 Status = delivery.Status
             };
 
-            if (list != null)
+            if (viewModel != null)
             {
-                return View(list);
+                return View(viewModel);
             }
+
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(EditDeliveryViewModel editDelivery)
         {
-            Delivery delivery = await _applicationContext.Delivery.FirstAsync(t => t.Id == editDelivery.DeliveryId);
+            var delivery = await _applicationContext.Delivery.FirstAsync(x => x.Id == editDelivery.DeliveryId);
             delivery.Status = editDelivery.Status;
             _applicationContext.Entry(delivery).State = EntityState.Modified;
             await _applicationContext.SaveChangesAsync();
+
             return RedirectToAction("Index");
         }
     }

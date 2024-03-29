@@ -2,6 +2,7 @@
     margin: 0 25% 0 25%;
     width: 50%;
 }
+
 .form div {
     margin: 10px 0px;
 }
@@ -12,24 +13,24 @@
     border-radius: 10px;
 }
 
-.form label,
-.form button {
-    color: #ffffff;
-    font-size: 18px;
-}
+    .form label,
+    .form button {
+        color: #ffffff;
+        font-size: 18px;
+    }
 
-.form input[type="text"],
-.form input[type="password"] {
-    width: 250px;
-    padding: 5px;
-    border-radius: 5px;
-}
+    .form input[type="text"],
+    .form input[type="password"] {
+        width: 250px;
+        padding: 5px;
+        border-radius: 5px;
+    }
 
-.form button {
-    background-color: #ffffff;
-    color: #336699;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    .form button {
+        background-color: #ffffff;
+        color: #336699;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }

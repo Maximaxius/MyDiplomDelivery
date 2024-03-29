@@ -3,6 +3,7 @@
 <form asp-controller="Roles" asp-action="Index">
     <button>Roles</button>
 </form>
+
 <div>
     @if (Model.Any())
     {
@@ -25,10 +26,18 @@
                     <td >@item.Role.Count <span title="@string.Join(" ",item.Role)">{i}</span></td> @* i заменить на иконку *@
                     
                     <td>
-                        <button class="show"><a asp-controller="Roles" asp-action="Edit" asp-route-userId="@item.Id">Изменить роль</a></button>
+                        <button class="show">
+                            <a asp-controller="Roles"
+                               asp-action="Edit"
+                               asp-route-userId="@item.Id">Изменить роль</a>
+                        </button>
                     </td>
                     <td>
-                        <button class="show"><a asp-controller="Admin" asp-action="EditUser" asp-route-userId="@item.Id">Редактировать пользователя</a></button>
+                        <button class="show">
+                            <a asp-controller="Admin"
+                               asp-action="EditUser"
+                               asp-route-userId="@item.Id">Редактировать пользователя</a>
+                        </button>
                     </td>
                 </tr>
             }
@@ -40,9 +49,10 @@
     }
 </div>
 
-@section Scripts{
+@section Scripts {
     <script src="~/js/Color.js" asp-append-version="true"></script>
 }
-@section Links{
+
+@section Links {
     <link rel="stylesheet" href="~/css/Orders.css" asp-append-version="true" />
 }

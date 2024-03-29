@@ -6,7 +6,7 @@
     <h2>@Localizer["Login to the application"]</h2>
     <form method="post" asp-controller="Account" asp-action="Login" class="form-signin" asp-route-returnUrl="@Model.ReturnUrl">
         <div asp-validation-summary="ModelOnly"></div>
-        <div class="form-floating">            
+        <div class="form-floating">
             <input asp-for="Email" class="form-control" id="floatingInput" placeholder="name@example.com" type="email" />
             <label asp-for="Email">@Localizer["Email"]</label>
             <span asp-validation-for="Email"></span>
@@ -20,7 +20,7 @@
             <label asp-for="RememberMe">
                 <input asp-for="RememberMe" />
                 @Localizer["RememberMe"]
-            </label><br />            
+            </label><br />
         </div>
         <div>
             <button class="w-100 btn btn-lg btn-primary" type="submit">@Localizer["Login"]</button>
@@ -28,6 +28,6 @@
     </form>
 </div>
 
-@section Links{
+@section Links {
     <link rel="stylesheet" href="~/css/Login.css" asp-append-version="true" />
 } 

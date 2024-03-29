@@ -1,5 +1,4 @@
 ﻿using MyDiplomDelivery.Enums;
-using MyDiplomDelivery.Models;
 
 namespace MyDiplomDelivery.ViewModels.DeliveryMan
 {

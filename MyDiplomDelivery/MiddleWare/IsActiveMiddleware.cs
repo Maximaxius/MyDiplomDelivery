@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using MyDiplomDelivery.Contexts;
 using MyDiplomDelivery.Models;
-using System.Data;
 
 namespace MyDiplomDelivery.MiddleWare
 {
@@ -45,7 +41,6 @@ namespace MyDiplomDelivery.MiddleWare
 
                     return;
                 }
-
             }
 
             await _next(context);

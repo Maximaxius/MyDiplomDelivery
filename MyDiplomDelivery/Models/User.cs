@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using MyDiplomDelivery.Enums;
 
 namespace MyDiplomDelivery.Models
 {

@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 
@@ -16,48 +17,48 @@
     <div id="result"></div>
 </div>
 
+@section Scripts {
+    <script>
+        function sendRequest() {
+            const inputData = document.getElementById('inputData').value; // Получаем значение из input
+            const JsonData = JSON.stringify({ input: inputData })
+            console.log(JsonData);
 
-@section Scripts {<script>
-    function sendRequest() {
-        const inputData = document.getElementById('inputData').value; // Получаем значение из input
-        const JsonData = JSON.stringify({ input: inputData })
-        console.log(JsonData);
+            fetch('/Home/GetOrderDetail', {
+                method: 'POST', // Метод запроса
+                headers: {
+                    'Content-Type': 'application/json' // Заголовки запроса
+                },
+                body: JSON.stringify({ input: inputData }) // Преобразуем данные в JSON и передаем в запрос
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Обработка полученного ответа в виде JSON
+            })
+            .then(data => {
+                console.log(data); // Вывод ответа в виде JSON объекта в консоль
+                const result = document.querySelector('#result');
+                result.innerHTML = "";
+                const statusDiv = document.createElement('div');
 
-        fetch('https://localhost:7010/Home/GetOrderDetail', {
-            method: 'POST', // Метод запроса
-            headers: {
-                'Content-Type': 'application/json' // Заголовки запроса
-            },
-            body: JSON.stringify({ input: inputData }) // Преобразуем данные в JSON и передаем в запрос
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json(); // Обработка полученного ответа в виде JSON
-        })
-        .then(data => {
-            console.log(data); // Вывод ответа в виде JSON объекта в консоль
-            const result = document.querySelector('#result');
-            result.innerHTML = "";
-            const statusDiv = document.createElement('div');            
-
-            // Добавляем текст внутрь созданного div
-            statusDiv.textContent = "@Localizer["Order status"]  " + data.status;
+                // Добавляем текст внутрь созданного div
+                statusDiv.textContent = "@Localizer["Order status"]  " + data.status;
             
-            // Добавляем созданный div в документ
-            result.appendChild(statusDiv);
-            // Проверяем есть ли комментарий и добавляем если есть 
-            if (data.comment != null) {
-                const commentDiv = document.createElement('div');
-                commentDiv.textContent = "@Localizer["Comment on order"]  " + data.comment;
-                result.appendChild(commentDiv);
-            }
-        })
-        .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
-            alert("@Localizer["Invalid request"]")
+                // Добавляем созданный div в документ
+                result.appendChild(statusDiv);
+                // Проверяем есть ли комментарий и добавляем если есть 
+                if (data.comment != null) {
+                    const commentDiv = document.createElement('div');
+                    commentDiv.textContent = "@Localizer["Comment on order"]  " + data.comment;
+                    result.appendChild(commentDiv);
+                }
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+                alert("@Localizer["Invalid request"]")
 
-        });
-    }
+            });
+        }
 </script>}

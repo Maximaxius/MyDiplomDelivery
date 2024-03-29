@@ -17,7 +17,11 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MyDiplomDelivery</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -32,7 +36,6 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Create">@Localizer["Create order"]</a>
                         </li>
 
-
                         @if (User.IsInRole("Manager"))
                         {
                             <li class="nav-item">
@@ -43,7 +46,6 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Delivery" asp-action="Index">@Localizer["Delivery"]</a>
                             </li>
                         }
-
 
                         @if (User.IsInRole("DeliveryMan"))
                         {
@@ -72,23 +74,23 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="History">@Localizer["History"]</a>
                             </li>
                         }
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <h5 class="nav-item">@User.Identity.Name</h5>
 
-                        <form class="nav-auth--btn" method="post" asp-controller="Account" asp-action="Logout">
-                                <input type="submit" value="@Localizer["Logout"]" />
-                        </form>
-                    }
-                    else
-                    {
-                        <span class="nav-item">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <h5 class="nav-item">@User.Identity.Name</h5>
+                            <form class="nav-auth--btn" method="post" asp-controller="Account" asp-action="Logout">
+                                    <input type="submit" value="@Localizer["Logout"]" />
+                            </form>
+                        }
+                        else
+                        {
+                            <span class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">@Localizer["Login"]</a>
-                        </span>
-                        <span class="nav-item">
+                            </span>
+                            <span class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">@Localizer["Register"]</a>
-                        </span>
-                    }
+                            </span>
+                        }
                     </ul>
                 </div>
             </div>
@@ -108,6 +110,7 @@
             </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

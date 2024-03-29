@@ -10,31 +10,38 @@ namespace MyDiplomDelivery.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(
+            UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
         }
+
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                User user = new User { 
-                    Email = model.Email, 
+                var user = new User
+                {
+                    Email = model.Email,
                     UserName = model.Email,
                     FirstName = model.FirstName,
                     SecondName = model.SecondName,
-                    LastName = model.LastName,                    
+                    LastName = model.LastName,
                 };
+
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 await _userManager.AddToRoleAsync(user, "User");
+
                 if (result.Succeeded)
                 {
                     // установка куки
@@ -49,11 +56,12 @@ namespace MyDiplomDelivery.Controllers
                     }
                 }
             }
+
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult Login(string returnUrl = "https://localhost:7149/Home/Index")
+        public IActionResult Login(string returnUrl = "/Home/Index") // UNDONE: сменить URL
         {
             return View(new LoginViewModel { ReturnUrl = returnUrl });
         }
@@ -64,8 +72,12 @@ namespace MyDiplomDelivery.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result =
-                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(
+                    model.Email,
+                    model.Password,
+                    model.RememberMe,
+                    false);
+
                 if (result.Succeeded)
                 {
                     // проверяем, принадлежит ли URL приложению
@@ -83,6 +95,7 @@ namespace MyDiplomDelivery.Controllers
                     ModelState.AddModelError("", "Неправильный логин и (или) пароль");
                 }
             }
+
             return View(model);
         }
 

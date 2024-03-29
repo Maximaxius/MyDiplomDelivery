@@ -8,7 +8,16 @@
     <select class="form-select" asp-items="Model.DeliveryManList" asp-for="SelectDeliveryMan"></select>
 
     <label asp-for="SelectDeliveryMan">@Localizer["SelectOrders"]</label>
-    <select asp-for="SelectedOrders" class="form-control chosen-select form-control-chosen" asp-items="Model.OrdersList" multiple="multiple" data-placeholder="Chose orders"></select>
+    <select asp-for="SelectedOrders"
+            class="form-control chosen-select form-control-chosen"
+            asp-items="Model.OrdersList"
+            multiple="multiple"
+            data-placeholder="Chose orders"></select>
 
-    <p><input class="show btn btn-lg btn-primary" style="margin-top: 12px;" type="submit" value="@Localizer["Create"]" /></p>
+    <p>
+        <input class="show btn btn-lg btn-primary"
+               style="margin-top: 12px;"
+               type="submit"
+               value="@Localizer["Create"]" />
+    </p>
 </form>

@@ -5,10 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using MyDiplomDelivery.Contexts;
 using MyDiplomDelivery.Enums;
 using MyDiplomDelivery.Models;
-using MyDiplomDelivery.ViewModels;
 using MyDiplomDelivery.ViewModels.DeliveryMan;
-using System;
-using System.Security.Claims;
 
 namespace MyDiplomDelivery.Controllers
 {
@@ -25,22 +22,24 @@ namespace MyDiplomDelivery.Controllers
             _applicationContext = applicationContext;
             _userManager = userManager;
         }
+
         public async Task<IActionResult> IndexAsync()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
             var deliveryDetails = await _applicationContext.DeliveryDetail
-                .Include(t => t.Order)
-                .Include(t => t.Delivery)
-                .Where(t => t.Delivery.DeliveryManId == user.Id && (t.Order.Status == StatusType.InProgress
-                || t.Order.Status == StatusType.Cancelled
-                || t.Order.Status == StatusType.Completed)).ToListAsync();
-            
-            var list = new List<AllOrderViewModel>();
+                .Include(x => x.Order)
+                .Include(x => x.Delivery)
+                .Where(x => x.Delivery.DeliveryManId == user.Id
+                    && (x.Order.Status == StatusType.InProgress
+                        || x.Order.Status == StatusType.Cancelled
+                        || x.Order.Status == StatusType.Completed))
+                .ToListAsync();
 
+            var collection = new List<AllOrderViewModel>();
             foreach (var deliveryDetail in deliveryDetails)
             {
-                var log = new AllOrderViewModel
+                var viewModel = new AllOrderViewModel
                 {
                     Name = deliveryDetail.Order.Name,
                     Description = deliveryDetail.Order.Description,
@@ -49,12 +48,12 @@ namespace MyDiplomDelivery.Controllers
                     Status = deliveryDetail.Order.Status,
                     Number = deliveryDetail.Order.Number,
                 };
-                list.Add(log);
+
+                collection.Add(viewModel);
             }
 
-            return View(list);
+            return View(collection);
         }
-        
 
         [HttpGet]
         public async Task<IActionResult> Order(string num)
@@ -70,27 +69,28 @@ namespace MyDiplomDelivery.Controllers
                 .Select(x => x.Order)
                 .FirstOrDefault(x => x.Number == num);
 
-            if (selectedOrder==null)
+            if (selectedOrder == null)
             {
                 return RedirectToAction("Index");
             }
-                        
-            DeliveryManEditOrderViewModel viewModel = new DeliveryManEditOrderViewModel
+
+            var viewModel = new DeliveryManEditOrderViewModel
             {
                 Number = selectedOrder.Number,
                 Status = selectedOrder.Status,
             };
+
             return View(viewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> Order(DeliveryManEditOrderViewModel editOrder)
         {
-            var Order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Number == editOrder.Number);
+            var Order = await _applicationContext.Order.FirstOrDefaultAsync(x => x.Number == editOrder.Number);
             Order!.Status = editOrder.Status;
-
             _applicationContext.Entry(Order).State = EntityState.Modified;
             await _applicationContext.SaveChangesAsync();
+
             return RedirectToAction("Index");
         }
     }

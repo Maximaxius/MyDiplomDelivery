@@ -1,5 +1,6 @@
 ﻿@model MyDiplomDelivery.ViewModels.Admin.EditUserViewModel
 @* сделать стили или поменять старые  *@
+
 <h2>Изменить User</h2>
 <form method="post" asp-controller="Admin" asp-action="EditUser" enctype="multipart/form-data">
     <input type="hidden" asp-for="@Model.Id" />
@@ -21,7 +22,6 @@
     <button type="submit">Send data</button>
 </form>
 
-
-@section Links{
+@section Links {
     <link rel="stylesheet" href="~/css/Inp.css" asp-append-version="true" />
 }

@@ -21,6 +21,7 @@
     }
 
 </table>
+
 <form asp-action="Edit" asp-controller="Delivery" method="post">
     <input type="hidden" asp-for="@Model.DeliveryId" />
     <input type="hidden" asp-for="@Model.CreationTime" />
@@ -32,12 +33,15 @@
         <option value="@StatusType.Cancelled">@StatusType.Cancelled.ToString()</option>
         <option value="@StatusType.Closed">@StatusType.Closed.ToString()</option>
     </select>
-    <p><input type="submit" class="show btn btn-lg btn-primary" style="margin-top: 12px;" value="@Localizer["Change"]" /></p>
+    <p>
+        <input type="submit" class="show btn btn-lg btn-primary" style="margin-top: 12px;" value="@Localizer["Change"]" />
+    </p>
 </form>
 
-@section Scripts{
+@section Scripts {
     <script src="~/js/Color.js" asp-append-version="true"></script>
 }
-@section Links{
+
+@section Links {
     <link rel="stylesheet" href="~/css/Orders.css" asp-append-version="true" />
 }

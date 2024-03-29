@@ -1,6 +1,4 @@
-﻿using MyDiplomDelivery.Models;
-
-namespace MyDiplomDelivery.ViewModels.Admin
+﻿namespace MyDiplomDelivery.ViewModels.Admin
 {
     public class EditUserViewModel
     {
@@ -9,6 +7,5 @@ namespace MyDiplomDelivery.ViewModels.Admin
         public string? LastName { get; set; }
         public string? SecondName { get; set; }
         public bool IsActive { get; set; }
-
     }
 }

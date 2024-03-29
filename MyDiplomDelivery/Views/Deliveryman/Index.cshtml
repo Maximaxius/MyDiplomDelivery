@@ -25,7 +25,9 @@
                     <td>@item.From</td>
                     <td>@item.To</td>
                     <td>
-                        <button class="show"><a asp-controller="Deliveryman" asp-action="Order" asp-route-num="@item.Number">@Localizer["Edit"]</a></button>
+                        <button class="show">
+                            <a asp-controller="Deliveryman" asp-action="Order" asp-route-num="@item.Number">@Localizer["Edit"]</a>
+                        </button>
                     </td>
                 </tr>
             }
@@ -39,9 +41,10 @@
 
 </div>
 
-@section Scripts{
+@section Scripts {
     <script src="~/js/Color.js" asp-append-version="true"></script>
 }
-@section Links{
+
+@section Links {
     <link rel="stylesheet" href="~/css/Orders.css" asp-append-version="true" />
 }

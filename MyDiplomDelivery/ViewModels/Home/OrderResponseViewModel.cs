@@ -1,6 +1,4 @@
-﻿using MyDiplomDelivery.Enums;
-
-namespace MyDiplomDelivery.ViewModels.Home
+﻿namespace MyDiplomDelivery.ViewModels.Home
 {
     public class OrderResponseViewModel
     {

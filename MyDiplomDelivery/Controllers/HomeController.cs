@@ -1,15 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MyDiplomDelivery.Models;
-using MyDiplomDelivery.ViewModels;
-using System.Data;
-using System;
-using System.Diagnostics;
-using Microsoft.AspNetCore.Identity;
-using MyDiplomDelivery.Contexts;
+﻿using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
+using MyDiplomDelivery.Contexts;
+using MyDiplomDelivery.ViewModels;
 using MyDiplomDelivery.ViewModels.Home;
-using Microsoft.AspNetCore.Localization;
+using System.Diagnostics;
 
 namespace MyDiplomDelivery.Controllers
 {
@@ -27,31 +22,32 @@ namespace MyDiplomDelivery.Controllers
             return View();
         }
 
-
         [HttpPost]
         public async Task<IActionResult> GetOrderDetail([FromBody] OrderRequestViewModel request)
         {
             if (!string.IsNullOrEmpty(request?.Input))
             {
                 var orderNumber = request!.Input.Trim();
-                var order = await _applicationContext.Order.FirstOrDefaultAsync(order => order.Number == orderNumber);
+                var order = await _applicationContext.Order.FirstOrDefaultAsync(x => x.Number == orderNumber);
                 if (order == null)
                 {
                     return NotFound();
                 }
+
                 var viewModel = new OrderResponseViewModel
                 {
                     Comment = order.Comment,
                     Status = order.Status.ToString(),
                 };
+
                 return Ok(viewModel);
             }
+
             return BadRequest();
         }
 
-
         public IActionResult Privacy()
-        {            
+        {
             return View();
         }
 
@@ -72,6 +68,5 @@ namespace MyDiplomDelivery.Controllers
 
             return LocalRedirect(returnUrl);
         }
-
     }
 }

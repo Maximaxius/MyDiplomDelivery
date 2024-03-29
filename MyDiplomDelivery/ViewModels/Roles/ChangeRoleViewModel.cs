@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
 
 namespace MyDiplomDelivery.ViewModels.Roles
 {
@@ -9,6 +8,7 @@ namespace MyDiplomDelivery.ViewModels.Roles
         public string UserEmail { get; set; }
         public List<IdentityRole> AllRoles { get; set; }
         public IList<string> UserRoles { get; set; }
+
         public ChangeRoleViewModel()
         {
             AllRoles = new List<IdentityRole>();

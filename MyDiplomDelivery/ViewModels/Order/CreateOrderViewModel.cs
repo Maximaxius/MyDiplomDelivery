@@ -15,6 +15,7 @@ namespace MyDiplomDelivery.ViewModels.O
 
         [Required]
         public string? To { get; set; }
+
         public string? Description { get; set; }
         public string? Comment { get; set; }
         public StatusType Status { get; set; }
